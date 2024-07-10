@@ -1,5 +1,5 @@
-import pymongo
-from pymongo import MongoClient
+# import pymongo
+# from pymongo import MongoClient
 """ 
     -Insert One Entry(param: dictionary of data): insert_one()
     -Insert Many Entries(param: List[documents]): insert_many([])
@@ -18,7 +18,9 @@ from pymongo import MongoClient
     -Remove Collection: drop()
     -Limiting Retrieval Data(param: number to limit to): limit(number)
 """
-cluster = MongoClient("mongodb+srv://smallgiant1010:mpCPg4HSkpLtztDE@restaurant-app-db.sxti2r7.mongodb.net/")
-db = cluster["restaurant_data"]
-collection = db["profiles"]
+# cluster = MongoClient("mongodb+srv://smallgiant1010:mpCPg4HSkpLtztDE@restaurant-app-db.sxti2r7.mongodb.net/")
+# db = cluster["restaurant_data"]
+# collection = db["profiles"]
 
+if __name__ == "__main__":
+    print("Hello, World!")
