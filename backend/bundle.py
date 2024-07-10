@@ -9,26 +9,41 @@ class Bundle:
         self.collection = self.db["profiles"]
 
 
-    def getProfiles(self) -> json:
+    def getProfiles(self) -> list[dict[str, str | int]]:
         data: list[dict[str, str | int]] = []
         for x in self.collection.find({}):
             data.append(x)
         
-        return json.dump(data)
+        return data
     
-    def getProfile(self, profile_id: dict[str, int]) -> json:
+
+    def getProfile(self, profile_id: dict[str, int]) -> dict[str, str | int]:
         errorMessage: dict[str, str] = {"Message" : "Profile Not Found"}
         found = self.collection.find_one({"_id" : profile_id})
-        return json.dump(found) if found else json.dump(errorMessage)
+        if found:
+            return found
+        else:
+            return errorMessage
             
+
     def createProfile(self, data: dict[str, int | str]) -> bool:
-        try:
+        if self.collection.find_one(data) == None:
             self.collection.insert_one(data)
             return True
-        except:
+        else:
             return False
         
-    def updateProfile(self, profile_id: dict[str, int], data: dict[str, str | int]) -> bool:
-        pass
         
+    def updateProfile(self, profile_id: dict[str, int], data: list[dict[str, dict[any, str | int]]]) -> bool:
+        if self.getProfile(profile_id) != None:
+            self.collection.update_one(profile_id, data)
+            return True
+        else:
+            return False
         
+    def deleteProfile(self, profile_id: dict[str, int]) -> bool:
+        if self.getProfile(profile_id=profile_id):
+            self.collection.delete_one(profile_id)
+            return True
+        else:
+            return False
