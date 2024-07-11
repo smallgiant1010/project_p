@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from bundle import Bundle
-import json
+from profileBundle import ProfileBundle as pM
+# import json
 
 app = FastAPI()
-profileMethods = Bundle()
+profileMethods = pM()
 
 class Profile(BaseModel):
     _id: int
@@ -15,24 +15,24 @@ class Profile(BaseModel):
     age: int
     gender: str
     allergies: list[str]
-    email: str
+    username: str
 
-@app.get("/")
+@app.get("/profiles")
 def get_all_profiles() -> list[dict[str, str | int]]:
     return profileMethods.getProfiles()
 
-@app.get("/profile/{profile_id}")
-def get_profile(profile_id : dict[str, int]) -> dict[str, str | int]:
-    return profileMethods.getProfile(profile_id=profile_id)
+@app.get("/profile/{username}")
+def get_profile(username: str, inputPassword: str) -> dict[str, str | int]:
+    return profileMethods.getProfile(username=username, inputPassword=inputPassword)
 
-@app.post("/create")
-def create_profile(data: dict[str, int | str]) -> bool:
-    return profileMethods.createProfile(data=data)
+@app.post("/create/{username}")
+def create_profile(username: str, password: str, email: str) -> bool:
+    return profileMethods.createProfile(username=username, password=password, email=email)
 
-@app.put("/update/{profile_id}")
-def update_profile(profile_id: dict[str, int], data: list[dict[str, dict[any, str | int]]]) -> bool:
-    return profileMethods.updateProfile(profile_id=profile_id, data=data)
+# @app.put("/profile/{profile_id}")
+# def update_profile(profile_id: dict[str, int], data: list[dict[str, dict[any, str | int]]]) -> bool:
+#     return profileMethods.updateProfile(profile_id=profile_id, data=data)
 
-@app.delete("/delete/{profile_id}")
-def delete_profile(profile_id: dict[str, int]) -> bool:
-    return profileMethods.deleteProfile(profile_id=profile_id)
+# @app.delete("/delete/{profile_id}")
+# def delete_profile(profile_id: dict[str, int]) -> bool:
+#     return profileMethods.deleteProfile(profile_id=profile_id)
