@@ -33,16 +33,9 @@ class ProfileBundle:
         # Getting the Profile
         search = self.collection.find_one({"username" : username})
 
-
-        # Hashing the Input
-        compareValue = (inputPassword + search["salt"]).encode()
-        self.hasher.update(compareValue)
-        result = self.hasher.hexdigest()
-
-
         # Checking for Credentials
         if search:
-            return incorrectCredentials if search["hashedPassword"] == result else search
+            return incorrectCredentials if self.passwordValidation(username, inputPassword) else search
         else:
             return notFoundCredentials
     
@@ -53,7 +46,9 @@ class ProfileBundle:
 
         # Hashing and Salting
         randomSalt = self.rWord.get_random_word()
-        hashedPassword = (password + randomSalt).encode()
+        self.hasher.update(randomSalt)
+        hashedSalt = self.hasher.hexdigest()
+        hashedPassword = (password + hashedSalt).encode()
         self.hasher.update(hashedPassword)
         hashed = self.hasher.hexdigest()
 
@@ -63,7 +58,7 @@ class ProfileBundle:
         # Creating New Profile
         newProfile = {
             "_id": (latestProfile["_id"] + 1) if latestProfile else 1,
-            "salt" : randomSalt,
+            "salt" : hashedSalt,
             "username" : username,
             "password" : hashed,
             "email": email
@@ -76,16 +71,37 @@ class ProfileBundle:
         return newProfile
     
         
-    def updateProfile(self, profile_id: dict[str, int], data: list[dict[str, dict[any, str | int]]]) -> bool:
-        if self.getProfile(profile_id) != None:
-            self.collection.update_one(profile_id, data)
-            return True
-        else:
-            return False
+    def updateProfile(self, profile_id: dict[str, int], field: str, new_value: str | int) -> dict[str, str]:
+        # Checking if the Profile Exists
+        profile = self.collection.find_one(profile_id)
+        if not profile: return {"Message" : "Profile Not Found"}
+
+        if field != "password":
+            # Updating Variables
+            self.collection.update_one(profile, {"$set" : {field : new_value}})
+
+            # Return Message
+            return {"Message": "Profile has been updated"}
         
+
+
     def deleteProfile(self, profile_id: dict[str, int]) -> bool:
-        if self.getProfile(profile_id=profile_id):
+        # Searches for the existence
+        if self.collection.find_one(profile_id):
+
+            # Deletes Profile
             self.collection.delete_one(profile_id)
             return True
         else:
             return False
+        
+
+    def passwordValidation(self, username: str, inputPassword: str) -> bool:
+        # Hashing the Input
+        search = self.collection.find_one({"username" : username})
+        compareValue = (inputPassword + search["salt"]).encode()
+        self.hasher.update(compareValue)
+        result = self.hasher.hexdigest()
+
+        # Comparing Passwords
+        return result == search["password"]

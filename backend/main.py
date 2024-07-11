@@ -26,13 +26,13 @@ def get_profile(username: str, inputPassword: str) -> dict[str, str | int]:
     return profileMethods.getProfile(username=username, inputPassword=inputPassword)
 
 @app.post("/create/{username}")
-def create_profile(username: str, password: str, email: str) -> bool:
+def create_profile(username: str, password: str, email: str) -> dict[str, str | int]:
     return profileMethods.createProfile(username=username, password=password, email=email)
 
-# @app.put("/profile/{profile_id}")
-# def update_profile(profile_id: dict[str, int], data: list[dict[str, dict[any, str | int]]]) -> bool:
-#     return profileMethods.updateProfile(profile_id=profile_id, data=data)
+@app.put("/profile/{profile_id}")
+def update_profile(profile_id: dict[str, int], key: str, value: str | int) -> dict[str, str | int]:
+    return profileMethods.updateProfile(profile_id=profile_id, field=key, new_value=value)
 
-# @app.delete("/delete/{profile_id}")
-# def delete_profile(profile_id: dict[str, int]) -> bool:
-#     return profileMethods.deleteProfile(profile_id=profile_id)
+@app.delete("/delete/{profile_id}")
+def delete_profile(profile_id: dict[str, int]) -> bool:
+    return profileMethods.deleteProfile(profile_id=profile_id)
