@@ -8,7 +8,6 @@ class ProfileBundle:
         self.db = self.cluster["restaurant_data"]
         self.collection = self.db["profiles"]
         self.rWord = RandomWords()
-        self.hasher = hashlib.new("SHA256")
 
 
     def getProfiles(self) -> list[dict[str, str | int]]:
@@ -35,22 +34,23 @@ class ProfileBundle:
 
         # Checking for Credentials
         if search:
-            return incorrectCredentials if self.passwordValidation(username, inputPassword) else search
+            return search if self.passwordValidation(inputPassword, search) else incorrectCredentials
         else:
             return notFoundCredentials
     
 
-    def create_profile(self, username: str, password: str, email: str) -> dict[str, str]:
+    def createProfile(self, username: str, password: str, email: str) -> dict[str, str]:
         # Checking for existing Profiles
         if self.collection.find_one({"username": username}): return {"Message" : "This username is already in use."}
 
         # Hashing and Salting
-        randomSalt = self.rWord.get_random_word()
-        self.hasher.update(randomSalt)
-        hashedSalt = self.hasher.hexdigest()
-        hashedPassword = (password + hashedSalt).encode()
-        self.hasher.update(hashedPassword)
-        hashed = self.hasher.hexdigest()
+        saltHasher = hashlib.new("SHA256")
+        saltHasher.update(self.rWord.get_random_word().encode())
+        hashedSalt = saltHasher.hexdigest()
+
+        passwordHasher = hashlib.new("SHA256")
+        passwordHasher.update((password + hashedSalt).encode())
+        hashedPassword = passwordHasher.hexdigest()
 
         # Finding Max ID
         latestProfile = self.collection.find_one(sort=[("_id", -1)])
@@ -60,7 +60,7 @@ class ProfileBundle:
             "_id": (latestProfile["_id"] + 1) if latestProfile else 1,
             "salt" : hashedSalt,
             "username" : username,
-            "password" : hashed,
+            "password" : hashedPassword,
             "email": email
         }
 
@@ -71,9 +71,9 @@ class ProfileBundle:
         return newProfile
     
         
-    def updateProfile(self, profile_id: dict[str, int], field: str, new_value: str | int) -> dict[str, str]:
+    def updateProfile(self, profile_id: int, field: str, new_value: str | int) -> dict[str, str]:
         # Checking if the Profile Exists
-        profile = self.collection.find_one(profile_id)
+        profile = self.collection.find_one({"_id": profile_id})
         if not profile: return {"Message" : "Profile Not Found"}
 
         if field != "password":
@@ -85,23 +85,23 @@ class ProfileBundle:
         
 
 
-    def deleteProfile(self, profile_id: dict[str, int]) -> bool:
+    def deleteProfile(self, profile_id: int) -> bool:
         # Searches for the existence
-        if self.collection.find_one(profile_id):
+        if self.collection.find_one({"_id": profile_id}):
 
             # Deletes Profile
-            self.collection.delete_one(profile_id)
+            self.collection.delete_one({"_id": profile_id})
             return True
         else:
             return False
         
 
-    def passwordValidation(self, username: str, inputPassword: str) -> bool:
+    def passwordValidation(self, inputPassword: str, search) -> bool:
         # Hashing the Input
-        search = self.collection.find_one({"username" : username})
+        passwordHasher = hashlib.new("SHA256")
         compareValue = (inputPassword + search["salt"]).encode()
-        self.hasher.update(compareValue)
-        result = self.hasher.hexdigest()
+        passwordHasher.update(compareValue)
+        result = passwordHasher.hexdigest()
 
         # Comparing Passwords
         return result == search["password"]

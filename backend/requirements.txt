@@ -36,5 +36,5 @@ urllib3==2.2.2
 uvicorn==0.30.1
 watchfiles==0.22.0
 websockets==12.0
-pymongo==7.0.12
+pymongo==4.8.0
 random-word==1.0.11
