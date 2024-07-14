@@ -1,10 +1,10 @@
 import hashlib
 from random_word import RandomWords
-from pymongo import MongoClient
+
 
 class ProfileBundle:
-    def __init__(self) -> None:
-        self.cluster = MongoClient("mongodb+srv://smallgiant1010:mpCPg4HSkpLtztDE@restaurant-app-db.sxti2r7.mongodb.net/")
+    def __init__(self, cluster) -> None:
+        self.cluster = cluster
         self.db = self.cluster["restaurant_data"]
         self.collection = self.db["profiles"]
         self.rWord = RandomWords()
@@ -85,15 +85,15 @@ class ProfileBundle:
         
 
 
-    def deleteProfile(self, profile_id: int) -> bool:
+    def deleteProfile(self, profile_id: int) -> dict[str, str]:
         # Searches for the existence
         if self.collection.find_one({"_id": profile_id}):
 
             # Deletes Profile
             self.collection.delete_one({"_id": profile_id})
-            return True
+            return {"Message": "Profile Successfully Deleted"}
         else:
-            return False
+            return {"Message": "Profile does not exist"}
         
 
     def passwordValidation(self, inputPassword: str, search) -> bool:
