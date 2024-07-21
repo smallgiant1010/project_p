@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import Navbar from "./components/Navbar";
 // import Image from "next/image";
 // import Link from "next/link";
@@ -15,8 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} style={{margin: "0px"}}>
         <Navbar />
+        <hr style={{margin: "0px", border: "0px", background: "black", height : "5px"}}></hr>
         {children}
       </body>
     </html>

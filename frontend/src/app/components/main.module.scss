@@ -1,0 +1,62 @@
+@import '_variables.module.scss';
+.nav {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1920px;
+    height: 75px;
+    background-color: map-get($map: $colors, $key: primary);
+
+
+    .home_redirect {
+        display: flex;
+        align-items: center;
+
+
+        .home_button {
+            display: flex;
+            background-color: map-get($map: $colors, $key: primary);
+            border: 0px solid;
+            padding: 0%;    
+            
+            
+            .website_name{
+                display: flex;
+                align-items: center;
+                font-family: $main-font-family;
+                font-size: map-get($map: $text-sizes, $key: XL);
+                text-decoration: none;
+                color: map-get($map: $colors, $key: secondary);
+
+                &:hover {
+                    color: map-get($map: $colors, $key: text);
+                }
+            }
+        }
+    }
+
+
+    .content_pages {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+
+        @at-root #{&}_button {
+            border: 0px solid;
+            background-color: map-get($map: $colors, $key: primary);
+            padding-right: 40px;
+
+        }
+
+        @at-root #{&}_name {
+            text-decoration: none;
+            font-family: $main-font-family;
+            font-size: map-get($map: $text-sizes, $key: XL);
+            color: map-get($map: $colors, $key: secondary);
+
+            &:hover {
+                color: map-get($map: $colors, $key: text)
+            }
+        }
+    }
+}
