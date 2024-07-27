@@ -1,5 +1,6 @@
-# ignore everything in the virtual environment
+# ignore everything in the virtual environment and pycache
 *.venv/
+*__pycache__
 
 # ignore the env file
 .env
