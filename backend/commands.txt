@@ -1,0 +1,21 @@
+# Create New Environment
+python -m venv env
+
+# List
+ls 
+
+# Activate
+.venv\Scripts\activate
+
+# Deactivate
+deactivate
+
+# PIP
+pip install <name>==<version>
+pip freeze > requirements.txt
+pip install -r requirements.txt
+pip freeze 
+pip search <name>
+
+# FastAPI
+python -m uvicorn main:app --reload

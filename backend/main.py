@@ -1,19 +1,20 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from pydantic import BaseModel
 from pymongo import MongoClient
 from profileBundle import ProfileBundle as pM
-from productsBundle import ProductsBundle as ppM
+from dotenv import load_dotenv, dotenv_values 
+from carrequests import CarData as CD
+import os
 # import json
 
 
 # Activate Virtual Environment: .\env\Scripts\activate 
 # Run Command: uvicorn main:app --reload
 # Accessing Docs: url + /docs
+load_dotenv()
 app = FastAPI()
-cluster = MongoClient("mongodb+srv://smallgiant1010:mpCPg4HSkpLtztDE@restaurant-app-db.sxti2r7.mongodb.net/")
+cluster = MongoClient(os.getenv("MONGO_CONNECT_STRING"))
 profileMethods = pM(cluster=cluster)
-productsMethods = ppM(cluster=cluster)
-
 class Profile(BaseModel):
     _id: int
     name: str
@@ -48,24 +49,35 @@ def delete_profile(profile_id: int) -> bool:
     return profileMethods.deleteProfile(profile_id)
 
 
-
-# Product Post API Requests
-@app.get("/products")
-def getAllProducts() -> list[dict[str, str | int]]:
-    return productsMethods.getProducts()
-
-@app.get("/products/{name}:{publisher}")
-def getProduct(name: str, publisher: str) -> dict[str, str]:
-    return productsMethods.getProductInfo(name, publisher)
-
-@app.post("/products/create")
-def createProduct(postInfo: dict[str, any]) -> dict[str,str]:
-    return productsMethods.createProductPost(postInfo)
-
-@app.put("/products/{product_id}/update")
-def updateProduct(product_id: int, key, value) -> dict[str, str]:
-    return productsMethods.updateProductPost(product_id, key, value)
-
-@app.delete("/products/{product_id}/delete")
-def deleteProduct(product_id: int) -> dict[str, str]:
-    return productsMethods.deleteProductPost(product_id)
+# Car Requests
+@app.get("/car/stats")
+def getCarData(
+    make: str = Query("Toyota", description="Car make"),
+    model: str = Query("Camry", description="Car model"),
+    year: int = Query(2020, description="Car year"),
+    fuel_type: str = Query(None, description="Fuel Type"),
+    drive: str = Query(None, description="Drive Type"),
+    cylinders: int = Query(None, description="Cylinder Count"),
+    transmission: str = Query(None, description="Transmission Type"),
+    min_city_mpg: int = Query(None, description="MINCMPG"),
+    max_city_mpg: int = Query(None, description="MAXCMPG"),
+    min_hwy_mpg: int = Query(None, description="MINHMPG"),
+    max_hwy_mpg: int = Query(None, description="MAXHMPG"),
+    profile_id: int = Query(1, description="Profile ID")
+):
+    filters = {
+        'make': make,
+        'model': model,
+        'year': year,
+        'fuel_type': fuel_type,
+        'drive': drive,
+        'cylinders': cylinders,
+        'transmission': transmission,
+        'min_city_mpg': min_city_mpg,
+        'max_city_mpg': max_city_mpg,
+        'min_hwy_mpg': min_hwy_mpg,
+        'max_hwy_mpg': max_hwy_mpg,
+        'limit': 50
+    }
+    carData = CD(cluster=cluster, profile_id=profile_id)
+    return carData.getCarStats(filters=filters)
