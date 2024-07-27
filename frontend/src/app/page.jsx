@@ -8,7 +8,7 @@ export default function Home() {
   const [filterData, setFilterData] = useState({});
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
-  const [year, setYear] = useState(2017);
+  const [year, setYear] = useState(6969);
   const [CMPG, setCMPG] = useState([24, 30]);
   const [HMPG, setHMPG] = useState([30, 40]);
   const [cylinders, setCylinders] = useState(2);
@@ -52,6 +52,13 @@ export default function Home() {
     "Highway Miles Per Gallon": HMPG,
   };
 
+  const filterState = {
+    "Cylinders": cylinders,
+    "Fuel Type": fuel,
+    "Drive": drive,
+    "Transmission": transmission,
+  };
+
 
 
   // {styles.sidebar_filters_label}
@@ -59,24 +66,67 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.search}>
-        {/* <Image /> */}
-      </div>
-      <div className={styles.filters}>
-        <form>
-          
-        </form>
-          <h1 className={styles.filters_header}>
-            Filter
-          </h1>
-          <hr></hr>
-          <dl className={styles.filters_types}>
-          </dl>
-          <dt className={styles.filters_types_options}></dt>
-          <dd className={styles.filters_types_options_more}></dd>
-      </div>
-      <div className={styles.body}>
-      </div>
+      <aside className={styles.sidebar}>
+        <h1 className={styles.filters_header}>Filter</h1>
+        <div className={styles.filter_section}>
+          <h2 className={styles.filter_title}>Keyword Filters</h2>
+          <form>
+            <label className={styles.filter_label}>
+              Make:
+              <input type="text" value={make} onChange={(e) => setter(e, "Make")} />
+            </label>
+            <label className={styles.filter_label}>
+              Model:
+              <input type="text" value={model} onChange={(e) => setter(e, "Model")} />
+            </label>
+            <label className={styles.filter_label}>
+              Year:
+              <input type="number" value={year} onChange={(e) => setter(e, "Year")} />
+            </label>
+          </form>
+        </div>
+        <div className={styles.filter_section}>
+          <h2 className={styles.filter_title}>Range Filters</h2>
+            <label className={styles.filter_label}>
+              City Miles Per Gallon:
+              <div className={styles.range_input}>
+                <input
+                  type="number"
+                  value={"Min" || ''}
+                  onChange={(e) => setCMPG([Number(e.target.value), CMPG[1] || 30])}
+                  placeholder="Min"
+                />
+                <span className={styles.range_separator}>to</span>
+                <input
+                  type="number"
+                  value={"Max" || ''}
+                  onChange={(e) => setCMPG([CMPG[0] || 24, Number(e.target.value)])}
+                  placeholder= "Max"
+                />
+              </div>
+          </label>
+        </div>
+        <div className={styles.filter_section}>
+          <h2 className={styles.filter_title}>Selection Filters</h2>
+          {Object.keys(selection_filters).map((filterKey) => (
+            <div key={filterKey}>
+              <h3 className={styles.filter_sub_title}>{filterKey}</h3>
+              {selection_filters[filterKey].map((option) => (
+                <label key={option} className={styles.filter_label}>
+                  <input
+                    type="radio"
+                    name={filterKey}
+                    value={option}
+                    checked={filterState[filterKey] === option}
+                    onChange={(e) => setter(e, filterKey)}
+                  />
+                  {option}
+                </label>
+              ))}
+            </div>
+          ))}
+        </div>
+      </aside>
     </main>
   );
 }
