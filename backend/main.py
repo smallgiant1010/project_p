@@ -15,6 +15,7 @@ load_dotenv()
 app = FastAPI()
 cluster = MongoClient(os.getenv("MONGO_CONNECT_STRING"))
 profileMethods = pM(cluster=cluster)
+carData = CD(cluster=cluster, profile_id=None)
 class Profile(BaseModel):
     _id: int
     name: str
@@ -27,24 +28,25 @@ class Profile(BaseModel):
     username: str
 
 
+
 # Profile API Requests
 @app.get("/profiles")
 def get_all_profiles() -> list[dict[str, str | int]]:
     return profileMethods.getProfiles()
 
-@app.get("/profile/{username}")
+@app.get("/profiles/{username}")
 def get_profile(username: str, inputPassword: str) -> dict[str, str | int]:
     return profileMethods.getProfile(username=username, inputPassword=inputPassword)
 
-@app.post("/profile/create")
+@app.post("/profiles/create")
 def create_profile(username: str, password: str, email: str) -> dict[str, str | int]:
     return profileMethods.createProfile(username=username, password=password, email=email)
 
-@app.put("/profile/{profile_id}/update")
+@app.put("/profiles/{profile_id}/update")
 def update_profile(profile_id: int, key: str, value: str | int) -> dict[str, str | int]:
     return profileMethods.updateProfile(profile_id, field=key, new_value=value)
 
-@app.delete("/profile/{profile_id}/delete")
+@app.delete("/profiles/{profile_id}/delete")
 def delete_profile(profile_id: int) -> bool:
     return profileMethods.deleteProfile(profile_id)
 
@@ -63,7 +65,6 @@ def getCarData(
     max_city_mpg: int = Query(None, description="MAXCMPG"),
     min_hwy_mpg: int = Query(None, description="MINHMPG"),
     max_hwy_mpg: int = Query(None, description="MAXHMPG"),
-    profile_id: int = Query(1, description="Profile ID")
 ):
     filters = {
         'make': make,
@@ -79,5 +80,21 @@ def getCarData(
         'max_hwy_mpg': max_hwy_mpg,
         'limit': 50
     }
-    carData = CD(cluster=cluster, profile_id=profile_id)
+    filters = {k: v for k, v in filters.items() if v is not None}
     return carData.getCarStats(filters=filters)
+
+@app.get("/cars/marketvalue")
+def getMarketValue(year: int=2020, make: str="toyota", model:str="camry"):
+    return carData.getMarketValueOfCar(year=year, make=make, model=model)
+
+@app.get("/cars/picture")
+def getCarPhoto(year: int=2020, make:str = "toyota", model:str="camry"):
+    return carData.getCarImage(year=year, make=make, model=model)
+
+
+
+
+
+
+
+
