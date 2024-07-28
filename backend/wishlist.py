@@ -22,5 +22,26 @@
 # db = cluster["restaurant_data"]
 # collection = db["profiles"]
 
-if __name__ == "__main__":
-    print("Hello, World!")
+class Wishlist:
+
+    def __init__(self, cluster, profile_id: dict[str, int]) -> None:
+        self.cluster = cluster
+        self.id = profile_id
+        self.db = self.cluster["restaurant_data"]
+        self.collection = self.db["wishlist"]
+        self.profile_id = profile_id
+
+    
+    # Retrieving WishList
+    def retrieveWishList() -> list[dict[str, str | int]]:
+        pass
+
+    
+    # Add to WishList
+    def addCar() -> dict[str, str]:
+        pass
+
+
+    # Remove from WishList
+    def removeCar() -> dict[str, str]:
+        pass

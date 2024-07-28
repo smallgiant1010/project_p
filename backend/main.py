@@ -15,7 +15,7 @@ load_dotenv()
 app = FastAPI()
 cluster = MongoClient(os.getenv("MONGO_CONNECT_STRING"))
 profileMethods = pM(cluster=cluster)
-carData = CD(cluster=cluster, profile_id=None)
+carData = CD()
 class Profile(BaseModel):
     _id: int
     name: str

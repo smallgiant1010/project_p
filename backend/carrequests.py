@@ -4,11 +4,7 @@ from dotenv import load_dotenv, dotenv_values
 
 
 class CarData:
-    def __init__(self, cluster, profile_id: dict[str, int]) -> None:
-        self.cluster = cluster
-        self.id = profile_id
-        self.db = self.cluster["restaurant_data"]
-        self.collection = self.db["wishlist"]
+    def __init__(self) -> None:
         self.ninja = "https://api.api-ninjas.com/v1/cars"
         self.marketChecker = "https://mc-api.marketcheck.com/v2/stats/car"
         self.unsplash = "https://api.unsplash.com/search/photos"
@@ -97,7 +93,7 @@ class CarData:
         # Return Market Value
         return result
     
-    def getCarImage(self, year: int, make: str, model:str) -> dict[str, str]:
+    def getCarImage(self, year: int, make: str, model:str) -> dict[str, str] | list[dict[str, str | int]]:
         # Error Message
         errorMessage = {
             "Message": "Could not retrieve a Image for this car"
@@ -113,7 +109,8 @@ class CarData:
         params = {
             'query': f"A {year} {make} {model} car",
             'client_id': os.getenv("UNSPLASH_API_KEY"),
-            'per_page': 10
+            'page': 1,
+            'per_page': 1
         }
 
         # API CALL
