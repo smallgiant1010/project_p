@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from profileBundle import ProfileBundle as pM
 from dotenv import load_dotenv, dotenv_values 
 from carrequests import CarData as CD
+from wishlist import Wishlist as wL
 import os
 # import json
 
@@ -93,7 +94,21 @@ def getCarPhoto(year: int=2020, make:str = "toyota", model:str="camry"):
 
 
 
+# Wish List Requests
+@app.get("/profile/wishlist")
+def getWishList(profile_id: dict[str, int]) -> dict[str, str]:
+    wishlistData = wL(cluster=cluster, profile_id=profile_id)
+    return wishlistData.retrieveWishList()
 
+@app.post("/profile/addCar")
+def addToWishlist(profile_id: dict[str, int], carData: dict[str, int | str]) -> dict[str, str]:
+    wishlistData = wL(cluster=cluster, profile_id=profile_id)
+    return wishlistData.addCar(carData=carData)
+
+@app.delete("/profile/removeCar")
+def removeFromWishList(profile_id: dict[str, int], carData: dict[str, int | str]) -> dict[str, str]:
+    wishlistData = wL(cluster=cluster, profile_id=profile_id)
+    return wishlistData.removeCar(carData=carData)
 
 
 

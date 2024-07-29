@@ -33,15 +33,68 @@ class Wishlist:
 
     
     # Retrieving WishList
-    def retrieveWishList() -> list[dict[str, str | int]]:
-        pass
+    def retrieveWishList(self) -> list[dict[str, str | int]] | dict[str, str]:
+        # Setting up Message
+        emptyMessage = {
+                "Message" : "Your WishList is empty"
+            }
+        
+        # Resulting List of Cars
+        result = []
 
-    
+        # Getting all cars under this id
+        specificWishList = self.collection.find({"_id": self.profile_id})
+
+        # Car Validation
+        if specificWishList:
+            for car in specificWishList:
+                result.append(car)
+
+            result["count"] = self.collection.count_documents({"_id" : self.profile_id})
+        else:
+            return emptyMessage
+        
+        return result
+
     # Add to WishList
-    def addCar() -> dict[str, str]:
-        pass
+    def addCar(self, carData: dict[str, str | int]) -> dict[str, str]:
+        # Setting up Status Message
+        statusMessage = {
+            "Message": None
+        }
 
+        # Adding ID to Car Data
+        addition = carData
+        addition["_id"] = self.profile_id
+
+        # Car Validation
+        if self.collection.find_one(addition):
+            statusMessage["Message"] = "This is already in your wishlist"
+            return statusMessage
+        else:
+            self.collection.insert_one(addition)
+            statusMessage["Message"] = "Car successfully added to wishlist"
+            return statusMessage
 
     # Remove from WishList
-    def removeCar() -> dict[str, str]:
-        pass
+    def removeCar(self, carData: dict[str, str | int]) -> dict[str, str]:
+        # Status Message
+        statusMessage  = {
+            "Message" : None
+        }
+
+        # Car ID To Data
+        addition = carData
+        addition["_id"] = self.profile_id
+        search = self.collection.find_one(addition)
+
+        # Car Validation
+        if search:
+            self.collection.delete_one(addition)
+            statusMessage["Message"] = "This car has been removed from the wishlist"
+            return statusMessage
+        
+        else:
+            statusMessage["Message"] = "This car cannot be removed"
+            return statusMessage
+        
