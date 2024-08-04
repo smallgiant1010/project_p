@@ -2,9 +2,15 @@ import Link from "next/link";
 import Logo from "./logo.png";
 import styles from "./main.module.scss";
 import Image from "next/image";
-import Profile from "./account.png"
+import Profile from "./account.png" 
 
 export default function Navbar() {
+
+    // const router = useRouter();
+    // const handleSignInClick = () => {
+    //     router.push('/login');
+    //   };
+
     return (
         <nav className={styles.nav}>
             <div className={styles.home_redirect}>
@@ -33,18 +39,21 @@ export default function Navbar() {
                         HISTORY
                     </Link>
                 </button>
-                <button className={styles.profile_button}>
-                    <span className={styles.content_pages_name}>
+                <button className={styles.content_pages_button}>
+                    <Link href="/login" className={styles.content_pages_name}>
                         SIGN IN
-                    </span>
-                    <Image
+                    </Link>
+                    {/* <span className={styles.content_pages_name}>
+                        SIGN IN
+                    </span> */}
+                    {/* <Image
                         src={Profile}
                         alt={"Profile Picture"}
                         width={75}
                         height={75}
                         quality={100}
                         priority
-                    />
+                    /> */}
                 </button>
             </div>
         </nav>

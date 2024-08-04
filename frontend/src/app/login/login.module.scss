@@ -1,0 +1,201 @@
+// $primary-color: #3498db;
+// $background-color: #f5f5f5;
+// $text-color: #333;
+// $border-radius: 5px;
+
+// $primary-color: #0070f3;
+// $secondary-color: #005bb5;
+// $background-color: #ffffff;
+// $border-color: #ccc;
+// $button-padding: 10px;
+// $input-padding: 8px;
+// $font-size: 42px;
+
+// Main container for the login page
+// .main {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100vh;
+//   background-color: $background-color;
+// }
+
+// Container for the login form
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  // border: 2px solid rgba(255,255,255,.2);
+  background-image: url('../components/car_bg.jpg');
+  background-size: cover; // Cover the entire element
+  background-position: center; // Center the image
+  background-repeat: no-repeat; // No repeating
+  min-height: 100vh;
+  width: 100%;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // background: transparent;
+  // border: 2px solid rgba(255, 255, 255, 0.2);
+  // color:black;
+  // // min-height: 100vh;
+  // width: 420px;
+  // margin: 0 auto; // Center the container horizontally
+  // padding: 20px; // Optional padding for inner spacing
+  // box-sizing: border-box; // Ensure padding and border are included in the element's total width and height
+  h1{
+    font-size: 50px;
+    text-align: center;
+    margin-left:60px;
+    color:white;
+  }
+  .loginComp{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    // background: rgb(51, 180, 0);
+    // margin: 60px
+    margin-top: 60px; 
+    border-color: yellow;
+    color: white;
+
+    input{
+      // width: 100%;
+      // height: 100%;
+      // border: 2px solid yellow; 
+      // background: transparent;
+      // box-sizing: border-box;
+      // color: white;
+      // border-radius: 40px;
+      justify-content: center;
+      align-items: center;
+
+      background: transparent;
+      width: 100%;
+      height: 100%;
+      border : 3px solid white;
+      outline: none;
+      border-radius: 40px;
+      font-size: 21px;
+      color :white;
+      padding: 20px 45px 20px 20px;
+    }
+
+    .icon{
+      position:absolute;
+      right:-40px;
+      top:100%;
+      transform: translateY(-50%);
+      font-size: 21px;
+
+    }
+  }
+
+  .forgotPass{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin-top: 70px;
+    // margin:-30px 0 30px;
+    
+    label input{
+      accent-color: white;
+      margin-right: 4px;
+    }
+    a{
+      color:white;
+      text-decoration: none;
+
+    }
+  }
+
+  button{
+    margin-left: 30px;
+    margin-top:50px;
+    width: 100%;
+    height: 45px;
+    background: white;
+    border:none;
+    outline:none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color:black;
+    font-weight: 700;
+  }
+}
+
+// // Form styling
+// .loginForm {
+//   display: flex;
+//   flex-direction: column;
+//   text-align: center;
+// }
+
+// // Heading for the login form
+// .heading {
+//   margin-bottom: 20px;
+//   font-size: 24px;
+//   color: $primary-color;
+//   text-align: center;
+// }
+
+// Container for each form input group
+// .loginComp {
+//   input{
+//     background: transparent;
+//     width: 100%;
+//     height: 100%;
+//     border : 3px solid #91ff0033;
+//     outline: none;
+//     border-radius: 40px;
+//     font-size: 16px;
+//     color :white;
+//     padding: 20px 45px 20px 20px;
+
+//     placeholder{
+//       color:rgb(255, 251, 0);
+//     }
+//   }
+// }
+
+// // Label styling
+// .label {
+//   display: block;
+//   font-weight: bold;
+//   margin-bottom: 5px;
+//   font-size: $font-size;
+// }
+
+// // Input field styling
+// .input {
+//   font-size: $font-size;
+//   width: 100%;
+//   height: 100%;
+//   border: none;
+//   outline: none;
+//   background: transparent;
+//   padding: $input-padding;
+//   border: 2px solid rgb(199, 10, 10);
+//   border-radius: 40px;
+//   font-size: $font-size;
+//   // box-sizing: border-box;
+// }
+
+// // Button styling
+// .button {
+//   background-color: $primary-color;
+//   color: #561fad;
+//   border: none;
+//   padding: $button-padding;
+//   border-radius: 40px;
+//   cursor: pointer;
+//   font-size: $font-size;
+//   transition: background-color 0.3s;
+
+//   &:hover {
+//     background-color: $secondary-color;
+//   }
+// }

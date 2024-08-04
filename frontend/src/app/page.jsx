@@ -11,6 +11,7 @@ export default function Home() {
   const [year, setYear] = useState(6969);
   const [CMPG, setCMPG] = useState([24, 30]);
   const [HMPG, setHMPG] = useState([30, 40]);
+  const [marketValue, setMarketValue] = useState([0, 0])
   const [cylinders, setCylinders] = useState(2);
   const [fuel, setFuel] = useState("Gas");
   const [drive, setDrive] = useState("Front Wheel Drive");
@@ -33,6 +34,7 @@ export default function Home() {
       case "Highway Miles Per Gallon": setHMPG(
         e.target.value
       ); break;
+      case "Market Value": setMarketValue(e.target.value); break;
       case "Cylinders": setCylinders(e.target.value); break;
       case "Fuel Type": setFuel(e.target.value); break;
       case "Drive": setDrive(e.target.value); break;
@@ -50,6 +52,7 @@ export default function Home() {
   const range_filters = {
     "City Miles Per Gallon": CMPG, 
     "Highway Miles Per Gallon": HMPG,
+    "Maket Value": marketValue
   };
 
   const filterState = {
@@ -101,6 +104,42 @@ export default function Home() {
                   type="number"
                   value={"Max" || ''}
                   onChange={(e) => setCMPG([CMPG[0] || 24, Number(e.target.value)])}
+                  placeholder= "Max"
+                />
+              </div>
+          </label>
+          <label className={styles.filter_label}>
+              Highway Miles Per Gallon:
+              <div className={styles.range_input}>
+                <input
+                  type="number"
+                  value={"Min" || ''}
+                  onChange={(e) => setHMPG([Number(e.target.value), [1] || 30])}
+                  placeholder="Min"
+                />
+                <span className={styles.range_separator}>to</span>
+                <input
+                  type="number"
+                  value={"Max" || ''}
+                  onChange={(e) => setHMPG([HMPG[0] || 24, Number(e.target.value)])}
+                  placeholder= "Max"
+                />
+              </div>
+          </label>
+          <label className={styles.filter_label}>
+              Market Value:
+              <div className={styles.range_input}>
+                <input
+                  type="number"
+                  value={"Min" || ''}
+                  onChange={(e) => setMarketValue([Number(e.target.value), marketValue[1] || 30])}
+                  placeholder="Min"
+                />
+                <span className={styles.range_separator}>to</span>
+                <input
+                  type="number"
+                  value={"Max" || ''}
+                  onChange={(e) => setMarketValue([marketValue[0] || 24, Number(e.target.value)])}
                   placeholder= "Max"
                 />
               </div>
