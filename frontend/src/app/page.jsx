@@ -6,22 +6,48 @@ import { useState } from "react";
 export default function Home() {
 
   const [filterData, setFilterData] = useState({});
-  const [make, setMake] = useState("");
-  const [model, setModel] = useState("");
-  const [year, setYear] = useState(6969);
-  const [CMPG, setCMPG] = useState([24, 30]);
-  const [HMPG, setHMPG] = useState([30, 40]);
-  const [marketValue, setMarketValue] = useState([0, 0])
-  const [cylinders, setCylinders] = useState(2);
-  const [fuel, setFuel] = useState("Gas");
-  const [drive, setDrive] = useState("Front Wheel Drive");
-  const [transmission, setTransmission] = useState("Automatic");
+  const [make, setMake] = useState("Toyota");
+  const [model, setModel] = useState("Camry");
+  const [year, setYear] = useState(2020);
+  const [CMPG, setCMPG] = useState([]);
+  const [HMPG, setHMPG] = useState([]);
+  const [marketValue, setMarketValue] = useState([])
+  const [cylinders, setCylinders] = useState();
+  const [fuel, setFuel] = useState();
+  const [drive, setDrive] = useState();
+  const [transmission, setTransmission] = useState();
   
-  const keyword_filters = {
-      "Make": make, 
-      "Model": model,  
-      "Year": year,
+  // const keyword_filters = {
+  //     "Make": make, 
+  //     "Model": model,  
+  //     "Year": year,
+  // };
+
+  const store_filters = () => {
+      const data = {
+        "make": make,
+        "model": model,
+        "year": year,
+        "fuel_type": fuel_type,
+        "drive": drive,
+        "cylinders": cylinders,
+        "transmission":transmission,
+        "min_city_mpg": CMPG.length > 0 ? CMPG[0] : null,
+        "max_city_mpg": CMPG.length > 1 ? CMPG[1] : null,
+        "min_hwy_mpg": HMPG.length > 0 ? HMPG[0] : null,
+        "max_hwy_mpg": HMPG.length > 1 ? HMPG[1] : null,
+      }
+      
+
   };
+
+  const callStats = (data) => {
+    // Call the api from the python backend
+    // return data as a js object
+  };
+
+  //Create new method to store all data
+  //Loop through data and make boxes with said data
 
   const setter = (e, parameter) => {
     switch (parameter) {
@@ -40,7 +66,7 @@ export default function Home() {
       case "Drive": setDrive(e.target.value); break;
       case "Transmission": setTransmission(e.target.value); break;
     }
-  }
+  };
 
   const selection_filters = {
     "Cylinders" : [2, 3, 4, 5, 6, 8, 10, 12, 16],
@@ -49,11 +75,11 @@ export default function Home() {
     "Transmission": ["Manual", "Automatic"], 
   };
 
-  const range_filters = {
-    "City Miles Per Gallon": CMPG, 
-    "Highway Miles Per Gallon": HMPG,
-    "Maket Value": marketValue
-  };
+  // const range_filters = {
+  //   "City Miles Per Gallon": CMPG, 
+  //   "Highway Miles Per Gallon": HMPG,
+  //   "Maket Value": marketValue
+  // };
 
   const filterState = {
     "Cylinders": cylinders,
@@ -70,7 +96,9 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <aside className={styles.sidebar}>
-        <h1 className={styles.filters_header}>Filter</h1>
+        <div className={styles.filters_header}>
+          <h1>Filter</h1>
+        </div>
         <div className={styles.filter_section}>
           <h2 className={styles.filter_title}>Keyword Filters</h2>
           <form>
@@ -164,6 +192,11 @@ export default function Home() {
               ))}
             </div>
           ))}
+            <div className={styles.filter_search}>
+              <button className={styles.filter_search_button} onClick={store_filters}>
+                VROOM VROOM
+              </button>
+          </div>
         </div>
       </aside>
     </main>

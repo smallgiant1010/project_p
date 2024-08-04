@@ -3,36 +3,21 @@
 // $text-color: #333;
 // $border-radius: 5px;
 
-// $primary-color: #0070f3;
-// $secondary-color: #005bb5;
-// $background-color: #ffffff;
-// $border-color: #ccc;
-// $button-padding: 10px;
-// $input-padding: 8px;
-// $font-size: 42px;
-
-// Main container for the login page
-// .main {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100vh;
-//   background-color: $background-color;
-// }
-
 // Container for the login form
+
 .loginContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   background: transparent;
   // border: 2px solid rgba(255,255,255,.2);
-  background-image: url('../components/car_bg.jpg');
+  background-image: url('../login/car_bg.png');
   background-size: cover; // Cover the entire element
   background-position: center; // Center the image
   background-repeat: no-repeat; // No repeating
   min-height: 100vh;
   width: 100%;
+
   // display: flex;
   // justify-content: center;
   // align-items: center;
@@ -44,51 +29,66 @@
   // margin: 0 auto; // Center the container horizontally
   // padding: 20px; // Optional padding for inner spacing
   // box-sizing: border-box; // Ensure padding and border are included in the element's total width and height
-  h1{
-    font-size: 50px;
-    text-align: center;
-    margin-left:60px;
-    color:white;
-  }
-  .loginComp{
-    position: relative;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    height: 50px;
-    // background: rgb(51, 180, 0);
-    // margin: 60px
-    margin-top: 60px; 
-    border-color: yellow;
-    color: white;
-
-    input{
-      // width: 100%;
-      // height: 100%;
-      // border: 2px solid yellow; 
-      // background: transparent;
-      // box-sizing: border-box;
-      // color: white;
-      // border-radius: 40px;
-      justify-content: center;
-      align-items: center;
-
-      background: transparent;
-      width: 100%;
-      height: 100%;
-      border : 3px solid white;
-      outline: none;
-      border-radius: 40px;
-      font-size: 21px;
-      color :white;
-      padding: 20px 45px 20px 20px;
+    max-width: 420px;
+    background: rgba(18, 13, 70, 0.5);
+    background: transparent;
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);  
+    backdrop-filter: blur(30px);
+    h1{
+      font-size: 50px;
+      text-align: center;
+      // margin-left:25px;
+      color:white;
     }
+    .loginComp{
+      position: relative;
+      width: 100%;
+      height: 50px;
+      // background: rgb(51, 180, 0);
+      // margin: 60px
+      margin-top: 60px; 
+      border-color: yellow;
+      color: white;
 
-    .icon{
-      position:absolute;
-      right:-40px;
-      top:100%;
-      transform: translateY(-50%);
-      font-size: 21px;
 
+      input{
+        // width: 100%;
+        // height: 100%;
+        // border: 2px solid yellow; 
+        // background: transparent;
+        // box-sizing: border-box;
+        // color: white;
+        // border-radius: 40px;
+        justify-content: center;
+        align-items: center;
+
+        background: transparent;
+        width: calc(100% - 75px);
+        height: 100%;
+        border : 3px solid white;
+        outline: none;
+        border-radius: 40px;
+        font-size: 21px;
+        color :white;
+        padding: 20px 50px 20px 20px;
+      }
+
+      .icon{
+        position:relative;
+        right:-330px;
+        top:-90%;
+        transform: translateY(-50%);
+        font-size: 21px;
+
+      }
     }
   }
 
@@ -97,7 +97,12 @@
     justify-content: space-between;
     font-size: 14.5px;
     margin-top: 70px;
+    margin-right:240px;
     // margin:-30px 0 30px;
+
+    label{
+      color:white;
+    }
     
     label input{
       accent-color: white;
@@ -111,7 +116,7 @@
   }
 
   button{
-    margin-left: 30px;
+    // margin-left: 15px;
     margin-top:50px;
     width: 100%;
     height: 45px;
@@ -124,6 +129,18 @@
     font-size: 16px;
     color:black;
     font-weight: 700;
+  }
+
+  @media (min-width: 600px) and (min-height: 920px){
+    .loginContainer{
+      width:100%;
+    }
+    .loginComp{
+      width:100%;
+    }
+    button{
+      width:100%;
+    }
   }
 }
 

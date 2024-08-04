@@ -31,7 +31,7 @@ export default function Navbar() {
             <div className={styles.content_pages}>
                 <button className={styles.content_pages_button}>
                     <Link href="/credits" className={styles.content_pages_name}>
-                        SEARCH
+                        CREDITS
                     </Link>
                 </button>
                 <button className={styles.content_pages_button}>
