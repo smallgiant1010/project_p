@@ -1,0 +1,53 @@
+.main {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 250px;
+    padding: 1rem;
+    background-color: #f4f4f4;
+  }
+  
+  .filters_header {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .filter_section {
+    margin-bottom: 5rem;
+  }
+  
+  .filter_title {
+    font-size: 1.5rem; 
+    font-weight: bold;
+    border-bottom: 2px solid #000; 
+    padding-bottom: 0.5rem; 
+    margin-bottom: 1rem; 
+  }
+
+  .filter_sub_title{
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .filter_label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+
+.range_input {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Adjust gap between inputs and "to" text */
+  }
+  
+  .range_input input {
+    width: 80px; /* Set a fixed width for the input boxes */
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+  .range_separator {
+    margin: 0 5px;
+  }
