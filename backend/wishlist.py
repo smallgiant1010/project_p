@@ -83,14 +83,11 @@ class Wishlist:
             "Message" : None
         }
 
-        # Car ID To Data
-        addition = carData
-        addition["_id"] = self.profile_id
-        search = self.collection.find_one(addition)
+        search = self.collection.find_one(carData)
 
         # Car Validation
-        if search:
-            self.collection.delete_one(addition)
+        if search["_id"] == self.profile_id:
+            self.collection.delete_one(carData)
             statusMessage["Message"] = "This car has been removed from the wishlist"
             return statusMessage
         
