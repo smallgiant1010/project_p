@@ -1,7 +1,7 @@
 'use client';
-import Image from "next/image";
 import styles from "./page.module.scss";
 import { useState } from "react";
+import FetchCars from "./fetch";
 
 export default function Home() {
 
@@ -199,6 +199,11 @@ export default function Home() {
           </div>
         </div>
       </aside>
+      <section>
+        {/* <div>
+          <FetchCars />
+        </div> */}
+      </section>
     </main>
   );
 }

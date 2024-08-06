@@ -115,6 +115,20 @@
     }
   }
 
+  .createAccount{
+    display: flex;
+    margin-left:200px;
+    margin-top: -17px; 
+    a{
+      color: white;
+      text-decoration: none;
+
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
+
   button{
     // margin-left: 15px;
     margin-top:50px;
