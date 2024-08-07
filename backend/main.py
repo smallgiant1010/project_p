@@ -6,7 +6,7 @@ from dotenv import load_dotenv, dotenv_values
 from carrequests import CarData as CD
 from wishlist import Wishlist as wL
 import os
-# import json
+import uvicorn
 
 
 # Activate Virtual Environment: .\env\Scripts\activate 
@@ -28,7 +28,9 @@ class Profile(BaseModel):
     allergies: list[str]
     username: str
 
-
+@app.get("/")
+def welcome():
+    return { "message": "Welcome"}
 
 # Profile API Requests
 @app.get("/profiles")
@@ -40,8 +42,8 @@ def get_profile(username: str, inputPassword: str) -> dict[str, str | int]:
     return profileMethods.getProfile(username=username, inputPassword=inputPassword)
 
 @app.post("/profiles/create")
-def create_profile(username: str, password: str, email: str) -> dict[str, str | int]:
-    return profileMethods.createProfile(username=username, password=password, email=email)
+def create_profile(loginInfo: dict[str, str]) -> dict[str, str | int]:
+    return profileMethods.createProfile(username=loginInfo["username"], password=loginInfo["password"], email=loginInfo["email"])
 
 @app.put("/profiles/{profile_id}/update")
 def update_profile(profile_id: int, key: str, value: str | int) -> dict[str, str | int]:
@@ -111,5 +113,8 @@ def removeFromWishList(profile_id: dict[str, int], carData: dict[str, int | str]
     return wishlistData.removeCar(carData=carData)
 
 
+# http://127.0.0.1:8000
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
 
 

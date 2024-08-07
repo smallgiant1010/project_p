@@ -1,14 +1,17 @@
 @import "../components/variables.module";
 .main {
     display: flex;
+    height: 120vh;
   }
   
   .sidebar {
+    display: flex;
+    flex-direction: column;
     width: 250px;
     padding: 1rem;
-    background-color: #f4f4f4;
-
+    background-color: black;
     .filters_header {
+      color:white;
       font-size: 1.5rem;
     }
     
@@ -34,19 +37,28 @@
     }
     
     .filter_title {
+      color:white;
       font-size: 1.5rem; 
       font-weight: bold;
       border-bottom: 2px solid #000; 
       padding-bottom: 0.5rem; 
       margin-bottom: 1rem; 
+
+      &:hover{
+        color:black;
+        background-color:white;
+        cursor: pointer;
+      }
     }
   
     .filter_sub_title{
+      color:white;
       font-size: 1.5rem;
       margin-bottom: 0.5rem;
     }
     
     .filter_label {
+      color:white;
       display: block;
       margin-bottom: 0.5rem;
     }

@@ -44,11 +44,11 @@ class ProfileBundle:
         if self.collection.find_one({"username": username}): return {"Message" : "This username is already in use."}
 
         # Hashing and Salting
-        saltHasher = hashlib.new("SHA256")
+        saltHasher = hashlib.sha256()
         saltHasher.update(self.rWord.get_random_word().encode())
         hashedSalt = saltHasher.hexdigest()
 
-        passwordHasher = hashlib.new("SHA256")
+        passwordHasher = hashlib.sha256()
         passwordHasher.update((password + hashedSalt).encode())
         hashedPassword = passwordHasher.hexdigest()
 

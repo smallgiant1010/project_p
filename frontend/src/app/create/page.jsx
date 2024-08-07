@@ -1,7 +1,10 @@
+'use client';
 import styles from "./create.module.scss";
 import Link from 'next/link';
+import Submit from "./submit";
 
 export default function Create(){
+
     return(
         <div className = {styles.signUp}>
             <form action="">

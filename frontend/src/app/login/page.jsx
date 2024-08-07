@@ -5,7 +5,6 @@ import { FaUser, FaLock } from "react-icons/fa";
 
 export default function Login(){
     return(
-
         <div className= {styles.loginContainer}>
             <form action = "">
                 <h1>Login</h1>
