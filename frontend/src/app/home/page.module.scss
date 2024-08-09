@@ -1,85 +1,294 @@
 @import "../components/variables.module";
+
+
 .main {
     display: flex;
-    height: 120vh;
-  }
-  
-  .sidebar {
-    display: flex;
-    flex-direction: column;
-    width: 250px;
-    padding: 1rem;
-    background-color: black;
-    .filters_header {
-      color:white;
-      font-size: 1.5rem;
-    }
+    height: 100%;
     
-    .filter_section {
-      margin-bottom: 5rem;
-      .filter_search {
+    .sidebarWrapper{
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      
+      .sidebar {
         display: flex;
-        justify-content: center;
-        padding-top: 1.5rem;
-        .filter_search_button {
+        flex-direction: column;
+        height: 100%;
+        width: 250px;
+        padding: 1rem;
+        background-color: black;
+        .filters_header {
+          color:white;
           font-size: 1.5rem;
-          background-color: map-get($map: $colors, $key: button);
-          color: map-get($map: $colors, $key: secondary);
-          border-radius: 0.5rem;
-          border-color: map-get($map: $colors, $key: secondary);
-          &:hover {
-            cursor: pointer;
-            color: map-get($map: $colors, $key: text);
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+        
+        .filter_section {
+          margin-bottom: 5rem;
+          .filter_search {
+            display: flex;
+            justify-content: center;
+            padding-top: 1.5rem;
+            .filter_search_button {
+              font-size: 1.5rem;
+              background-color: map-get($map: $colors, $key: button);
+              color: map-get($map: $colors, $key: secondary);
+              border-radius: 0.5rem;
+              border-color: map-get($map: $colors, $key: secondary);
+              &:hover {
+                cursor: pointer;
+                color: map-get($map: $colors, $key: text);
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+              }
+            }
           }
         }
-      }
-    }
+        
+        .filter_title {
+          color:white;
+          font-size: 1.5rem; 
+          font-weight: bold;
+          border-bottom: 2px solid #000; 
+          padding-bottom: 0.5rem; 
+          margin-bottom: 1rem; 
     
-    .filter_title {
-      color:white;
-      font-size: 1.5rem; 
-      font-weight: bold;
-      border-bottom: 2px solid #000; 
-      padding-bottom: 0.5rem; 
-      margin-bottom: 1rem; 
+          &:hover{
+            color:black;
+            background-color:white;
+            cursor: pointer;
+          }
+        }
+      
+        .filter_sub_title{
+          color:white;
+          font-size: 1.5rem;
+          margin-bottom: 0.5rem;
+        }
+        
+        .filter_label {
+          color:white;
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+        
+      
+        .range_input {
+          display: flex;
+          align-items: center;
+          gap: 5px; /* Adjust gap between inputs and "to" text */
+        }
+        
+        .range_input input {
+          width: 80px; /* Set a fixed width for the input boxes */
+          padding: 5px;
+          font-size: 14px;
+        }
+        
+        .range_separator {
+          margin: 0 5px;
+        }
 
-      &:hover{
-        color:black;
-        background-color:white;
-        cursor: pointer;
+        .filter_search_button{
+          bottom:0;
+          margin-top: 250px;
+        }
+    
+        // @media (max-height: 720px){
+        //   height: 120vh;
+        //   width: 250px;
+        // }
+    
+        // @media (min-height: 721px){
+        //   height: 120vh;
+        //   width: 250px;
+        // }
+    
       }
-    }
-  
-    .filter_sub_title{
-      color:white;
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .filter_label {
-      color:white;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    
-  
-  .range_input {
-      display: flex;
-      align-items: center;
-      gap: 5px; /* Adjust gap between inputs and "to" text */
-    }
-    
-    .range_input input {
-      width: 80px; /* Set a fixed width for the input boxes */
-      padding: 5px;
-      font-size: 14px;
-    }
-    
-    .range_separator {
-      margin: 0 5px;
-    }
-
+    }  
   }
+
+
+// .sidebarWrapper{
+//   display: flex;
+//   height: 100%;
+//   flex-direction: column;
+  
+//   .sidebar {
+//     display: flex;
+//     flex-direction: column;
+//     height: 100%;
+//     width: 250px;
+//     padding: 1rem;
+//     background-color: black;
+//     .filters_header {
+//       color:white;
+//       font-size: 1.5rem;
+//     }
+    
+//     .filter_section {
+//       margin-bottom: 5rem;
+//       .filter_search {
+//         display: flex;
+//         justify-content: center;
+//         padding-top: 1.5rem;
+//         .filter_search_button {
+//           font-size: 1.5rem;
+//           background-color: map-get($map: $colors, $key: button);
+//           color: map-get($map: $colors, $key: secondary);
+//           border-radius: 0.5rem;
+//           border-color: map-get($map: $colors, $key: secondary);
+//           &:hover {
+//             cursor: pointer;
+//             color: map-get($map: $colors, $key: text);
+//             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+//           }
+//         }
+//       }
+//     }
+    
+//     .filter_title {
+//       color:white;
+//       font-size: 1.5rem; 
+//       font-weight: bold;
+//       border-bottom: 2px solid #000; 
+//       padding-bottom: 0.5rem; 
+//       margin-bottom: 1rem; 
+
+//       &:hover{
+//         color:black;
+//         background-color:white;
+//         cursor: pointer;
+//       }
+//     }
+  
+//     .filter_sub_title{
+//       color:white;
+//       font-size: 1.5rem;
+//       margin-bottom: 0.5rem;
+//     }
+    
+//     .filter_label {
+//       color:white;
+//       display: block;
+//       margin-bottom: 0.5rem;
+//     }
+    
+  
+//     .range_input {
+//       display: flex;
+//       align-items: center;
+//       gap: 5px; /* Adjust gap between inputs and "to" text */
+//     }
+    
+//     .range_input input {
+//       width: 80px; /* Set a fixed width for the input boxes */
+//       padding: 5px;
+//       font-size: 14px;
+//     }
+    
+//     .range_separator {
+//       margin: 0 5px;
+//     }
+
+    // @media (max-height: 720px){
+    //   height: 120vh;
+    //   width: 250px;
+    // }
+
+    // @media (min-height: 721px){
+    //   height: 120vh;
+    //   width: 250px;
+    // }
+
+//   }
+// }  
+  // .sidebar {
+  //   display: flex;
+  //   flex-direction: column;
+  //   min-height: 100vh;
+  //   height: 100%;
+  //   width: 250px;
+  //   padding: 1rem;
+  //   background-color: black;
+  //   .filters_header {
+  //     color:white;
+  //     font-size: 1.5rem;
+  //   }
+    
+  //   .filter_section {
+  //     margin-bottom: 5rem;
+  //     .filter_search {
+  //       display: flex;
+  //       justify-content: center;
+  //       padding-top: 1.5rem;
+  //       .filter_search_button {
+  //         font-size: 1.5rem;
+  //         background-color: map-get($map: $colors, $key: button);
+  //         color: map-get($map: $colors, $key: secondary);
+  //         border-radius: 0.5rem;
+  //         border-color: map-get($map: $colors, $key: secondary);
+  //         &:hover {
+  //           cursor: pointer;
+  //           color: map-get($map: $colors, $key: text);
+  //           box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  //         }
+  //       }
+  //     }
+  //   }
+    
+  //   .filter_title {
+  //     color:white;
+  //     font-size: 1.5rem; 
+  //     font-weight: bold;
+  //     border-bottom: 2px solid #000; 
+  //     padding-bottom: 0.5rem; 
+  //     margin-bottom: 1rem; 
+
+  //     &:hover{
+  //       color:black;
+  //       background-color:white;
+  //       cursor: pointer;
+  //     }
+  //   }
+  
+  //   .filter_sub_title{
+  //     color:white;
+  //     font-size: 1.5rem;
+  //     margin-bottom: 0.5rem;
+  //   }
+    
+  //   .filter_label {
+  //     color:white;
+  //     display: block;
+  //     margin-bottom: 0.5rem;
+  //   }
+    
+  
+  // .range_input {
+  //     display: flex;
+  //     align-items: center;
+  //     gap: 5px; /* Adjust gap between inputs and "to" text */
+  //   }
+    
+  //   .range_input input {
+  //     width: 80px; /* Set a fixed width for the input boxes */
+  //     padding: 5px;
+  //     font-size: 14px;
+  //   }
+    
+  //   .range_separator {
+  //     margin: 0 5px;
+  //   }
+
+  //   // @media (max-height: 720px){
+  //   //   height: 120vh;
+  //   //   width: 250px;
+  //   // }
+
+  //   // @media (min-height: 721px){
+  //   //   height: 120vh;
+  //   //   width: 250px;
+  //   // }
+
+  // }
   
   

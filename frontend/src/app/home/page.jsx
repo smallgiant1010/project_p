@@ -23,9 +23,9 @@ export default function Home() {
   //     "Year": year,
   // };
 
-  const[isKeywordVisible, setIsKeywordVisible] = useState(true);
-  const[isRangeVisible, setIsRangeVisible] = useState(true);
-  const[isSelectionVisible, setIsSelectionVisible] = useState(true);
+  const[isKeywordVisible, setIsKeywordVisible] = useState(false);
+  const[isRangeVisible, setIsRangeVisible] = useState(false);
+  const[isSelectionVisible, setIsSelectionVisible] = useState(false);
 
 
   const store_filters = () => {
@@ -114,127 +114,129 @@ export default function Home() {
   // {styles.sidebar_filters_option}
 
   return (
-    <main className={styles.main}>
-      <aside className={styles.sidebar}>
-        <div className={styles.filters_header}>
-          <h1>Filter</h1>
-        </div>
-        <div className={styles.filter_section}>
-          <h2 className={styles.filter_title} onClick={()=>toggleSection("keyword")}>Keyword Filters{isKeywordVisible ? " ▲" : " ▼"} </h2>
-          {isKeywordVisible && (
-            <form>
-              <label className={styles.filter_label}>
-                Make:
-                <input type="text" value={make} onChange={(e) => setter(e, "Make")} />
-              </label>
-              <label className={styles.filter_label}>
-                Model:
-                <input type="text" value={model} onChange={(e) => setter(e, "Model")} />
-              </label>
-              <label className={styles.filter_label}>
-                Year:
-                <input type="number" value={year} onChange={(e) => setter(e, "Year")} />
-              </label>
-            </form>
-          )}
-        </div>
-        <div className={styles.filter_section}>
-          <h2 className={styles.filter_title} onClick={()=>toggleSection("range")}>Range Filters{isRangeVisible ? " ▲" : " ▼"}</h2>
-          {isRangeVisible&&(
-            <>
-              <label className={styles.filter_label}>
-                City Miles Per Gallon:
-                <div className={styles.range_input}>
-                  <input
-                    type="number"
-                    value={CMPG[0]}
-                    onChange={(e) => setCMPG([Number(e.target.value), CMPG[1] || 30])}
-                    placeholder="Min"
-                  />
-                  <span className={styles.range_separator}>to</span>
-                  <input
-                    type="number"
-                    value={CMPG[1]}
-                    onChange={(e) => setCMPG([CMPG[0] || 24, Number(e.target.value)])}
-                    placeholder= "Max"
-                  />
-                </div>
-            </label>
-            <label className={styles.filter_label}>
-                Highway Miles Per Gallon:
-                <div className={styles.range_input}>
-                  <input
-                    type="number"
-                    value={HMPG[0]}
-                    onChange={(e) => setHMPG([Number(e.target.value), [1] || 30])}
-                    placeholder="Min"
-                  />
-                  <span className={styles.range_separator}>to</span>
-                  <input
-                    type="number"
-                    value={HMPG[1]}
-                    onChange={(e) => setHMPG([HMPG[0] || 24, Number(e.target.value)])}
-                    placeholder= "Max"
-                  />
-                </div>
-            </label>
-            <label className={styles.filter_label}>
-                Market Value:
-                <div className={styles.range_input}>
-                  <input
-                    type="number"
-                    value={marketValue[0]}
-                    onChange={(e) => setMarketValue([Number(e.target.value), marketValue[1] || 30])}
-                    placeholder="Min"
-                  />
-                  <span className={styles.range_separator}>to</span>
-                  <input
-                    type="number"
-                    value={marketValue[1]}
-                    onChange={(e) => setMarketValue([marketValue[0] || 24, Number(e.target.value)])}
-                    placeholder= "Max"
-                  />
-                </div>
-            </label>
-            </>
-          )}
-        </div>
-        <div className={styles.filter_section}>
-          <h2 className={styles.filter_title} onClick={()=>toggleSection("selection")}>Selection Filters{isSelectionVisible ? " ▲" : " ▼"}</h2>
-          {isSelectionVisible &&(
-          <>
-            {Object.keys(selection_filters).map((filterKey) => (
-              <div key={filterKey}>
-                <h3 className={styles.filter_sub_title}>{filterKey}</h3>
-                {selection_filters[filterKey].map((option) => (
-                  <label key={option} className={styles.filter_label}>
-                    <input
-                      type="radio"
-                      name={filterKey}
-                      value={option}
-                      checked={filterState[filterKey] === option}
-                      onChange={(e) => setter(e, filterKey)}
-                    />
-                    {option}
-                  </label>
-                ))}
-              </div>
-            ))}
-
-            </>
-          )}
-              <div className={styles.filter_search}>
-                <button className={styles.filter_search_button} onClick={store_filters}>
-                  VROOM VROOM
-                </button>
+      <main className={styles.main}>
+        <div className = {styles.sidebarWrapper}>
+          <aside className={styles.sidebar}>
+            <div className={styles.filters_header}>
+              <h1>Filter</h1>
             </div>
+            <div className={styles.filter_section}>
+              <h2 className={styles.filter_title} onClick={()=>toggleSection("keyword")}>Keyword Filters{isKeywordVisible ? " ▲" : " ▼"} </h2>
+              {isKeywordVisible && (
+                <form>
+                  <label className={styles.filter_label}>
+                    Make:
+                    <input type="text" value={make} onChange={(e) => setter(e, "Make")} />
+                  </label>
+                  <label className={styles.filter_label}>
+                    Model:
+                    <input type="text" value={model} onChange={(e) => setter(e, "Model")} />
+                  </label>
+                  <label className={styles.filter_label}>
+                    Year:
+                    <input type="number" value={year} onChange={(e) => setter(e, "Year")} />
+                  </label>
+                </form>
+              )}
+            </div>
+            <div className={styles.filter_section}>
+              <h2 className={styles.filter_title} onClick={()=>toggleSection("range")}>Range Filters{isRangeVisible ? " ▲" : " ▼"}</h2>
+              {isRangeVisible&&(
+                <>
+                  <label className={styles.filter_label}>
+                    City Miles Per Gallon:
+                    <div className={styles.range_input}>
+                      <input
+                        type="number"
+                        value={CMPG[0]}
+                        onChange={(e) => setCMPG([Number(e.target.value), CMPG[1] || 30])}
+                        placeholder="Min"
+                      />
+                      <span className={styles.range_separator}>to</span>
+                      <input
+                        type="number"
+                        value={CMPG[1]}
+                        onChange={(e) => setCMPG([CMPG[0] || 24, Number(e.target.value)])}
+                        placeholder= "Max"
+                      />
+                    </div>
+                </label>
+                <label className={styles.filter_label}>
+                    Highway Miles Per Gallon:
+                    <div className={styles.range_input}>
+                      <input
+                        type="number"
+                        value={HMPG[0]}
+                        onChange={(e) => setHMPG([Number(e.target.value), [1] || 30])}
+                        placeholder="Min"
+                      />
+                      <span className={styles.range_separator}>to</span>
+                      <input
+                        type="number"
+                        value={HMPG[1]}
+                        onChange={(e) => setHMPG([HMPG[0] || 24, Number(e.target.value)])}
+                        placeholder= "Max"
+                      />
+                    </div>
+                </label>
+                <label className={styles.filter_label}>
+                    Market Value:
+                    <div className={styles.range_input}>
+                      <input
+                        type="number"
+                        value={marketValue[0]}
+                        onChange={(e) => setMarketValue([Number(e.target.value), marketValue[1] || 30])}
+                        placeholder="Min"
+                      />
+                      <span className={styles.range_separator}>to</span>
+                      <input
+                        type="number"
+                        value={marketValue[1]}
+                        onChange={(e) => setMarketValue([marketValue[0] || 24, Number(e.target.value)])}
+                        placeholder= "Max"
+                      />
+                    </div>
+                </label>
+                </>
+              )}
+            </div>
+            <div className={styles.filter_section}>
+              <h2 className={styles.filter_title} onClick={()=>toggleSection("selection")}>Selection Filters{isSelectionVisible ? " ▲" : " ▼"}</h2>
+              {isSelectionVisible &&(
+              <>
+                {Object.keys(selection_filters).map((filterKey) => (
+                  <div key={filterKey}>
+                    <h3 className={styles.filter_sub_title}>{filterKey}</h3>
+                    {selection_filters[filterKey].map((option) => (
+                      <label key={option} className={styles.filter_label}>
+                        <input
+                          type="radio"
+                          name={filterKey}
+                          value={option}
+                          checked={filterState[filterKey] === option}
+                          onChange={(e) => setter(e, filterKey)}
+                        />
+                        {option}
+                      </label>
+                    ))}
+                  </div>
+                ))}
+
+                </>
+              )}
+                  <div className={styles.filter_search}>
+                    <button className={styles.filter_search_button} onClick={store_filters}>
+                      VROOM VROOM
+                    </button>
+                </div>
+            </div>
+          </aside>
         </div>
-      </aside>
-      <section>
-        <div>
-          {/* <FetchCars /> */}
-        </div>
-      </section>
-    </main>
+        <section>
+          <div>
+            {/* <FetchCars /> */}
+          </div>
+        </section>
+      </main>
   );
 }

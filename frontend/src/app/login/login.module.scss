@@ -35,7 +35,6 @@
     align-items: center;
     width: 100%;
     max-width: 420px;
-    background: rgba(18, 13, 70, 0.5);
     background: transparent;
     padding: 20px;
     border-radius: 10px;
@@ -119,10 +118,9 @@
     display: flex;
     margin-left:200px;
     margin-top: -17px; 
-    a{
-      color: white;
-      text-decoration: none;
-
+    text-decoration: none;
+    span{
+      color: white;  
       &:hover{
         text-decoration: underline;
       }
@@ -131,7 +129,7 @@
 
   button{
     // margin-left: 15px;
-    margin-top:50px;
+    margin-top:70px;
     width: 100%;
     height: 45px;
     background: white;
@@ -143,6 +141,7 @@
     font-size: 16px;
     color:black;
     font-weight: 700;
+  
   }
 
   @media (min-width: 600px) and (min-height: 920px){
@@ -157,6 +156,17 @@
     }
   }
 }
+
+.fadeIn{
+  opacity:1;
+  transition:opacity 1s ease-in;
+}
+
+// .fadeOut{
+//   opacity: 0;
+//   transition: opacity 1s ease-out;
+//   position:absolute
+// }
 
 // // Form styling
 // .loginForm {

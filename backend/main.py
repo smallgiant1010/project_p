@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pymongo import MongoClient
 from profileBundle import ProfileBundle as pM
@@ -14,6 +15,13 @@ import uvicorn
 # Accessing Docs: url + /docs
 load_dotenv()
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins, you can specify domains like ["http://localhost:3000"]
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
 cluster = MongoClient(os.getenv("MONGO_CONNECT_STRING"))
 profileMethods = pM(cluster=cluster)
 carData = CD()

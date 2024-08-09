@@ -2,10 +2,11 @@
 .nav {
     display: flex;
     justify-content: space-between;
-    max-width: 1920px;
+    max-width: 100%;
     height: 75px;
     background-color: map-get($map: $colors, $key: primary);
-
+    position: sticky;
+    top: 0px;
 
     .home_redirect {
         display: flex;
