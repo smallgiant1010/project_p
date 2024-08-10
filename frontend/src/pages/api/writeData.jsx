@@ -8,14 +8,15 @@ export default function handler(requests, response) {
         
         try {
             const fileData = fs.readFileSync(filePath, 'utf8');
-            const json = JSON.parse(fileData);
-            json.push(data);
-            fs.writeFileSync(filePath, JSON.stringify(json, null, 2), 'utf8');
-            response.status(200).json({ message: data});
+            const jsonData = JSON.parse(fileData);
+            jsonData[0] = data;
+            fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), 'utf8');
+            console.log(data);
+            response.status(200).json(data);
         }
-        catch(err) {
+        catch(err) { 
             console.log(err);
-            response.status(405).json({ message: 'Data Unsuccessfully Written' });
+            response.status(500).json({ message: 'Data Unsuccessfully Written' });
         }
     }
     else {

@@ -1,10 +1,11 @@
 'use client';
 import styles from "./page.module.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FetchCars from "./fetch";
 
-export default function Home() {
 
+
+export default function Home() {
   const [filterData, setFilterData] = useState({});
   const [make, setMake] = useState("Toyota");
   const [model, setModel] = useState("Camry");
@@ -16,7 +17,6 @@ export default function Home() {
   const [fuel, setFuel] = useState();
   const [drive, setDrive] = useState();
   const [transmission, setTransmission] = useState();
-  
   // const keyword_filters = {
   //     "Make": make, 
   //     "Model": model,  

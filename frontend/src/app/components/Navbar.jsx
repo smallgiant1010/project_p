@@ -1,15 +1,40 @@
+"use client";
 import Link from "next/link";
 import Logo from "./logo.png";
 import styles from "./main.module.scss";
 import Image from "next/image";
-import Profile from "./account.png" 
+import Profile from "./account.png"
+import { useEffect, useState } from "react";
+
 
 export default function Navbar() {
+    const [isDropDown, setDropDown] = useState(false);
+    const [validation, setValidation] = useState(false);
+    const [userInfo, setUserInfo] = useState("SIGN IN");
+    const read = async() => {
+        const loginInfo = await fetch('api/readData', {
+            method: 'GET',
+        });
+        const res = await loginInfo.json();
+        const check = 'username' in res;
+        setValidation(check);
+        if (check) {
+            setUserInfo(res.username);
+        }
+        else {
+            setUserInfo("SIGN IN")
+        }
+    }
+    useEffect(() => {
+        read();
+        console.log(validation)
+    }
+    , [validation]);
 
-    // const router = useRouter();
-    // const handleSignInClick = () => {
-    //     router.push('/login');
-    //   };
+    const handleDropDown = () => {
+        setDropDown(!isDropDown);
+    }
+
 
     return (
         <nav className={styles.nav}>
@@ -40,9 +65,33 @@ export default function Navbar() {
                     </Link>
                 </button>
                 <button className={styles.content_pages_button}>
-                    <Link href="/login" className={styles.content_pages_name}>
-                        SIGN IN
-                    </Link>
+                    {validation ? (
+                        <div>
+                            <span className={styles.content_pages_name} onClick={handleDropDown}>
+                                {userInfo}
+                            </span>
+                            {isDropDown && (
+                                <div className={styles.dropDownMenu}>
+                                    <Link href="#" className={styles.dropDownItem}>
+                                        Settings
+                                    </Link>
+                                    <button onClick={() => {
+                                        fetch('api/deleteData', {
+                                            method: "DELETE",
+                                        }).finally(() => {
+                                            setValidation(false);
+                                        });           
+                                    }}className={styles.dropDownItem}>
+                                        LOG OUT
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ) :(
+                        <Link href="/login" className={styles.content_pages_name}>
+                            SIGN IN
+                        </Link>
+                    )}
                     {/* <span className={styles.content_pages_name}>
                         SIGN IN
                     </span> */}

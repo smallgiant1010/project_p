@@ -2,6 +2,7 @@
 import styles from "./create.module.scss";
 import Link from 'next/link';
 import { useState } from "react";
+
 export default function Create(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -22,6 +23,7 @@ export default function Create(){
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(basicProfile)
         });
+
         
     } 
 
