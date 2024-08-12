@@ -11,20 +11,31 @@ export default function Create(){
     const url = "http://127.0.0.1:8082/profiles/create";
     const handleSubmit = async(e) =>{
         e.preventDefault();
+        setLoading(true)
+        try {
+            const basicProfile = {
+                "username" : username,
+                "password" : password,
+                "email" : email,
+            };
+    
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(basicProfile)
+            });
 
-        const basicProfile = {
-            "username" : username,
-            "password" : password,
-            "email" : email,
-        };
-
-        const response = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(basicProfile)
-        });
-
-        
+            if(response.status !== 200) {
+                console.log(response.text);
+            }
+        }
+        catch(err) { 
+            console.log(err)
+        }
+        finally {
+            window.location.href = "/login";
+            setLoading(false)
+        }
     } 
 
     return(
@@ -43,11 +54,10 @@ export default function Create(){
                 <Link href="/login" passHref >
                     <span className = {styles.loginRedirect}>Already have an account?</span>
                 </Link>
-                <Link href="/login" passHref>
-                    <button type ="submit" className = {styles.signUpButton}>
-                        Sign up
-                    </button>
-                </Link>
+                <button type ="submit" className = {styles.signUpButton}>
+                    {loading && <span>Signing Up</span>}
+                    {!loading && <span>Sign Up</span>}
+                </button>
             </form>
         </div>
     );

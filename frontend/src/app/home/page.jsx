@@ -1,12 +1,13 @@
 'use client';
 import styles from "./page.module.scss";
 import { useState, useEffect } from "react";
-import FetchCars from "./fetch";
+// import FetchCars from "./fetch";
+import { useRouter } from "next/navigation";
 
 
 
 export default function Home() {
-  const [filterData, setFilterData] = useState({});
+  // const [filterData, setFilterData] = useState({});
   const [make, setMake] = useState("Toyota");
   const [model, setModel] = useState("Camry");
   const [year, setYear] = useState(2020);
@@ -17,11 +18,7 @@ export default function Home() {
   const [fuel, setFuel] = useState();
   const [drive, setDrive] = useState();
   const [transmission, setTransmission] = useState();
-  // const keyword_filters = {
-  //     "Make": make, 
-  //     "Model": model,  
-  //     "Year": year,
-  // };
+  const router = new useRouter();
 
   const[isKeywordVisible, setIsKeywordVisible] = useState(false);
   const[isRangeVisible, setIsRangeVisible] = useState(false);
@@ -42,7 +39,11 @@ export default function Home() {
         "min_hwy_mpg": HMPG.length > 0 ? HMPG[0] : null,
         "max_hwy_mpg": HMPG.length > 1 ? HMPG[1] : null,
       };
-      setFilterData(data);
+      // setFilterData(data);
+
+      // const params = new URLSearchParams(data).toString();
+      // const url = `/home?${params}`;
+      // router.push(url);
   };
 
   const toggleSection = (section) => {
@@ -61,13 +62,8 @@ export default function Home() {
     }
   };
 
-  const callStats = (data) => {
-    // Call the api from the python backend
-    // return data as a js object
-  };
-
-  //Create new method to store all data
-  //Loop through data and make boxes with said data
+  // Call the api from the python backend
+  // return data as a js object
 
   const setter = (e, parameter) => {
     switch (parameter) {

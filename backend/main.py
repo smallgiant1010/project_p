@@ -25,16 +25,16 @@ app.add_middleware(
 cluster = MongoClient(os.getenv("MONGO_CONNECT_STRING"))
 profileMethods = pM(cluster=cluster)
 carData = CD()
-class Profile(BaseModel):
-    _id: int
-    name: str
-    email: str
-    hashedPassword: str
-    salt: str
-    age: int
-    gender: str
-    allergies: list[str]
-    username: str
+# class Profile(BaseModel):
+#     _id: int
+#     name: str
+#     email: str
+#     hashedPassword: str
+#     salt: str
+#     age: int
+#     gender: str
+#     allergies: list[str]
+#     username: str
 
 @app.get("/")
 def welcome():
@@ -90,10 +90,10 @@ def getCarData(
         'min_hwy_mpg': min_hwy_mpg,
         'max_hwy_mpg': max_hwy_mpg,
         'limit': 50
-    }
+    } 
     filters = {k: v for k, v in filters.items() if v is not None}
     return carData.getCarStats(filters=filters)
-
+ 
 @app.get("/cars/marketvalue")
 def getMarketValue(year: int=2020, make: str="toyota", model:str="camry"):
     return carData.getMarketValueOfCar(year=year, make=make, model=model)
@@ -102,7 +102,7 @@ def getMarketValue(year: int=2020, make: str="toyota", model:str="camry"):
 def getCarPhoto(year: int=2020, make:str = "toyota", model:str="camry"):
     return carData.getCarImage(year=year, make=make, model=model)
 
-
+ 
 
 # Wish List Requests
 @app.get("/profile/wishlist")

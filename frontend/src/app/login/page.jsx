@@ -1,7 +1,7 @@
 "use client";
 import styles from "./login.module.scss";
 import { FaUser, FaLock } from "react-icons/fa";
-import { useState } from "react";
+import { useState} from "react";
 import Link from "next/link";
 
 export default function Login() {
@@ -24,29 +24,27 @@ export default function Login() {
             }
 
             const data = await response.json();
-            const write = await fetch('api/writeData', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-            });
-
-            if (!write.ok) {
-                throw new Error('Data was not written');
+            if ("Message" in data) {
+                setValidation(false);
             }
 
-            const profile = await write.json();
-            if (!("message" in profile)) {
-                const loginInfo = await fetch(`api/readData`, { 
-                    method: 'GET' 
-                });
-                if (loginInfo.ok) {
-                    const res = await loginInfo.json();
-                    const check = 'username' in res;
-                    setValidation(check);
-                    if (check) {
+            else {
+                // const write = await fetch('api/writeData', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(data),
+                // });
+
+                // if (write.status === 200) {
+                //     const loginInfo = await fetch(`api/readData`, {
+                //         method: 'GET'
+                //     });
+                //     if (loginInfo.ok) {
+                        sessionStorage.setItem('u_id', data._id);
+                        sessionStorage.setItem('username', data.username);
                         window.location.href = '/home';
-                    }
-                }
+                    // }
+                // }
             }
         } catch (error) {
             console.error(error);

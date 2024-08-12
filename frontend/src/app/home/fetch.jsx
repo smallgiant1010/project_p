@@ -1,58 +1,64 @@
-// 'use client';
-import React from 'react';
-import styles from "./page.module.scss";
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+// // 'use client';
+// import React from 'react';
+// import styles from "./page.module.scss";
+// import Image from 'next/image';
 
-// async function getCarStats(data, property) {
+// async function getCarStats(data) {
 //     const parameters = new URLSearchParams(data).toString();
-//     let request = "http://127.0.0.1:8000/cars/";
-
-//     if (property === "stats") {
-//         request += "stats";
-//     } else if (property === "mv") {
-//         request += "marketvalue";
-//     }
-
+//     const request = "http://127.0.0.1:8082/car/stats";
 //     const url = `${request}?${parameters}`;
-
+//     console.log(url)
 //     try {
-//         const response = await fetch(url, {
-//             next: {
-//                 revalidate: 3600
-//             }
-//         });
+//         const response = await fetch(url);
 
 //         if (!response.ok) {
 //             throw new Error(`HTTP error! Status: ${response.status}`);
 //         }
-
 //         return await response.json();
-
 //     } catch (error) {
 //         console.error('Error fetching data:', error);
-//         throw error;
 //     }
 // }
 
+// async function getCarMarketValue(data) {
+//     const parameters = new URLSearchParams(data).toString();
+//     const request = "http://127.0.0.1:8082/car/marketvalue";
+//     const url = `${request}?${parameters}`;
+//     try {
+//         const response = await fetch(url);
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+//         return await response.json();
+//     } catch (error) {
+//         console.error('Error fetching data:', error);
+//     }
+// }
 
-// export default async function FetchCars(filters) {
-//     const data = filters
-//     const property = 'stats'; 
-//     const carData = await getCarStats(data, property);
+// export async function getServerSideProps(data) {
+//     const { filters } = data;
+//     const carData = await getCarStats(filters);
 
-
-//     if (error) {
-//         return (
-//             <>
-//             <div>
-//                 Error Loading Data
-//             </div>
-//             </>
-//         )
+//     const carMarketValues = [];
+//     for (const car of carData) {
+//         const ymm = {
+//             year: car.year,
+//             make: car.make,
+//             model: car.model,
+//         };
+//         carMarketValues.push(await getCarMarketValue(ymm));
 //     }
 
-//     if (!carData) {
+//     return {
+//         props: {
+//             carData,
+//             carMarketValues,
+//         },
+//     };
+// }
+
+// export default async function FetchCars({ carData, carMarketValues }) {
+//     if (!carData || carMarketValues.length == 0) {
 //         return (
 //             <>
 //             <div>
@@ -61,13 +67,17 @@ import Image from 'next/image';
 //             </>
 //         )
 //     }
-
 //     return (
 //         <>
 //             {carData?.map((car) => (
 //                 <div>
 //                     <h2>{car.year} {car.make} {car.model}</h2>
 //                     <p>Image is supposed to be here</p>
+//                 </div>
+//             ))}
+//             {carMarketValues?.map((car) => (
+//                 <div key={car}>
+//                     <h1>{car.value}</h1>
 //                 </div>
 //             ))}
 //         </>

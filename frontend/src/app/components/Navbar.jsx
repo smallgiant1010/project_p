@@ -12,22 +12,29 @@ export default function Navbar() {
     const [validation, setValidation] = useState(false);
     const [userInfo, setUserInfo] = useState("SIGN IN");
     const read = async() => {
-        const loginInfo = await fetch('api/readData', {
-            method: 'GET',
-        });
-        const res = await loginInfo.json();
-        const check = 'username' in res;
-        setValidation(check);
-        if (check) {
-            setUserInfo(res.username);
+        // const loginInfo = await fetch('api/readData', {
+        //     method: 'GET',
+        // });
+        // const res = await loginInfo.json();
+        // const check = 'username' in res;
+        if (sessionStorage.getItem('username') !== null){
+            setValidation(true);
+            setUserInfo(sessionStorage.getItem('username'));
+            console.log("work");
+
         }
+        // setValidation(check);
+        // if (check) {
+        //     setUserInfo(sessionStorage.getItem('username'));
+        // }
         else {
             setUserInfo("SIGN IN")
+            console.log("not work");
         }
     }
     useEffect(() => {
         read();
-        console.log(validation)
+        // console.log(validation)
     }
     , [validation]);
 
@@ -72,15 +79,18 @@ export default function Navbar() {
                             </span>
                             {isDropDown && (
                                 <div className={styles.dropDownMenu}>
-                                    <Link href="#" className={styles.dropDownItem}>
+                                    {/* <Link href="#" className={styles.dropDownItem}>
                                         Settings
-                                    </Link>
-                                    <button onClick={() => {
+                                    </Link> */}
+                                    <button onClick={
+                                        () => {
+                                        sessionStorage.clear();
                                         fetch('api/deleteData', {
                                             method: "DELETE",
                                         }).finally(() => {
                                             setValidation(false);
-                                        });           
+                                        });  
+                                        window.location.href = "/login";         
                                     }}className={styles.dropDownItem}>
                                         LOG OUT
                                     </button>

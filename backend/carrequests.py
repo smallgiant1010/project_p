@@ -61,9 +61,9 @@ class CarData:
 
         
         # Debugging information
-        # print(f"Request URL: {response.url}")
-        # print(f"Status Code: {response.status_code}")
-        # print(f"Response Text: {response.text}")
+        print(f"Request URL: {response.url}")
+        print(f"Status Code: {response.status_code}")
+        print(f"Response Text: {response.text}")
 
 
         # Return Statements
@@ -77,19 +77,18 @@ class CarData:
     def processMarketValue(self, dataset=dict[str, dict[str, int]]) -> dict[str, int]:
         # Final String
         result = {}
-
+ 
         # Search for Market Values
         for stat in dataset:
             if stat == "price_stats":
                 if "median" in dataset.get(stat):
-                    result["median"] = dataset.get(stat)["median"]
+                    result["value"] = dataset.get(stat)["median"]
                 else:
-                    result["mean"] = dataset.get(stat)["mean"]
-
+                    result["value"] = dataset.get(stat)["mean"]
         # Unfound Statistics
-        if "median" not in result and "mean" not in result:
-            result["Message"] = "This car does not have a Market Value"
-        
+        if "value" not in result:
+            result["value"] = "This car does not have a Market Value"
+        print(result)
         # Return Market Value
         return result
     
