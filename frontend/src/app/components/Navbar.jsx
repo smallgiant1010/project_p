@@ -85,11 +85,7 @@ export default function Navbar() {
                                     <button onClick={
                                         () => {
                                         sessionStorage.clear();
-                                        fetch('api/deleteData', {
-                                            method: "DELETE",
-                                        }).finally(() => {
-                                            setValidation(false);
-                                        });  
+                                        setValidation(false);
                                         window.location.href = "/login";         
                                     }}className={styles.dropDownItem}>
                                         LOG OUT

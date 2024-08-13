@@ -1,53 +1,59 @@
 'use client';
 import styles from "./page.module.scss";
-import { useState, useEffect } from "react";
-// import FetchCars from "./fetch";
-import { useRouter } from "next/navigation";
+import { useState} from "react";
+import FetchCars from "./fetch";
+
 
 
 
 export default function Home() {
-  // const [filterData, setFilterData] = useState({});
-  const [make, setMake] = useState("Toyota");
+  const [data, setData] = useState({});
+  const [make, setMake] = useState("");
   const [model, setModel] = useState("Camry");
-  const [year, setYear] = useState(2020);
+  const [year, setYear] = useState("");
   const [CMPG, setCMPG] = useState([]);
   const [HMPG, setHMPG] = useState([]);
-  const [marketValue, setMarketValue] = useState([])
-  const [cylinders, setCylinders] = useState();
-  const [fuel, setFuel] = useState();
-  const [drive, setDrive] = useState();
-  const [transmission, setTransmission] = useState();
-  const router = new useRouter();
-
-  const[isKeywordVisible, setIsKeywordVisible] = useState(false);
-  const[isRangeVisible, setIsRangeVisible] = useState(false);
-  const[isSelectionVisible, setIsSelectionVisible] = useState(false);
+  const [cylinders, setCylinders] = useState("");
+  const [fuel, setFuel] = useState("");
+  const [drive, setDrive] = useState("");
+  const [transmission, setTransmission] = useState("");
+  const [marketValue, setMarketValue] = useState([]);
+  const [isKeywordVisible, setIsKeywordVisible] = useState("");
+  const [isRangeVisible, setIsRangeVisible] = useState("");
+  const [isSelectionVisible, setIsSelectionVisible] = useState("");
 
 
   const store_filters = () => {
-      const data = {
-        "make": make,
-        "model": model,
-        "year": year,
-        "fuel_type": fuel,
-        "drive": drive,
-        "cylinders": cylinders,
-        "transmission":transmission,
-        "min_city_mpg": CMPG.length > 0 ? CMPG[0] : null,
-        "max_city_mpg": CMPG.length > 1 ? CMPG[1] : null,
-        "min_hwy_mpg": HMPG.length > 0 ? HMPG[0] : null,
-        "max_hwy_mpg": HMPG.length > 1 ? HMPG[1] : null,
-      };
-      // setFilterData(data);
-
-      // const params = new URLSearchParams(data).toString();
-      // const url = `/home?${params}`;
-      // router.push(url);
+    let filters = {
+      "make": make,
+      "model": model,
+      "year": year,
+      "fuel_type": fuel,
+      "drive": drive,
+      "cylinders": cylinders,
+      "transmission": transmission,
+      "min_city_mpg": CMPG.length > 0 ? CMPG[0] : 24,
+      "max_city_mpg": CMPG.length > 1 ? CMPG[1] : 30,
+      "min_hwy_mpg": HMPG.length > 0 ? HMPG[0] : 24,
+      "max_hwy_mpg": HMPG.length > 1 ? HMPG[1] : 30,
+    };
+    console.log(filters)
+    const clean = (obj) => {
+        Object.keys(obj).reduce((acc, key) => {
+          const value = obj[key];
+          if (value != null) { 
+              acc[key] = value;
+          }
+          return acc;
+      }, {});
+    };
+    const cleanedData = clean(filters);
+    setData(cleanedData);
+    console.log(cleanedData)
   };
 
   const toggleSection = (section) => {
-    switch(section){
+    switch (section) {
       case "keyword":
         setIsKeywordVisible(!isKeywordVisible);
         break;
@@ -61,9 +67,6 @@ export default function Home() {
         break;
     }
   };
-
-  // Call the api from the python backend
-  // return data as a js object
 
   const setter = (e, parameter) => {
     switch (parameter) {
@@ -82,20 +85,16 @@ export default function Home() {
       case "Drive": setDrive(e.target.value); break;
       case "Transmission": setTransmission(e.target.value); break;
     }
+
   };
 
   const selection_filters = {
-    "Cylinders" : ["2", "3", "4", "5", "6", "8", "10", "12", "16"],
-    "Fuel Type" : ["Gas", "Diesel", "Electricity"],
-    "Drive" : ["Front Wheel Drive", "Rear Wheel Drive", "All Wheel Drive", "Four Wheel Drive"],
-    "Transmission": ["Manual", "Automatic"], 
+    "Cylinders": ["2", "3", "4", "5", "6", "8", "10", "12", "16"],
+    "Fuel Type": ["Gas", "Diesel", "Electricity"],
+    "Drive": ["Front Wheel Drive", "Rear Wheel Drive", "All Wheel Drive", "Four Wheel Drive"],
+    "Transmission": ["Manual", "Automatic"],
   };
 
-  // const range_filters = {
-  //   "City Miles Per Gallon": CMPG, 
-  //   "Highway Miles Per Gallon": HMPG,
-  //   "Maket Value": marketValue
-  // };
 
   const filterState = {
     "Cylinders": cylinders,
@@ -106,18 +105,16 @@ export default function Home() {
 
 
 
-  // {styles.sidebar_filters_label}
-  // {styles.sidebar_filters_option}
-
   return (
-      <main className={styles.main}>
-        <div className = {styles.sidebarWrapper}>
-          <aside className={styles.sidebar}>
-            <div className={styles.filters_header}>
-              <h1>Filter</h1>
-            </div>
-            <div className={styles.filter_section}>
-              <h2 className={styles.filter_title} onClick={()=>toggleSection("keyword")}>Keyword Filters{isKeywordVisible ? " ▲" : " ▼"} </h2>
+    <main className={styles.main}>
+      <div className={styles.sidebarWrapper}>
+        <aside className={styles.sidebar}>
+          <div className={styles.filters_header}>
+            <h1>Filter</h1>
+          </div>
+          <div className={styles.filter_section}>
+            <h2 className={styles.filter_title} onClick={() => toggleSection("keyword")}>Keyword Filters{isKeywordVisible ? " ▲" : " ▼"} </h2>
+            <div className = {styles.filter_dropdown}>
               {isKeywordVisible && (
                 <form>
                   <label className={styles.filter_label}>
@@ -126,7 +123,7 @@ export default function Home() {
                   </label>
                   <label className={styles.filter_label}>
                     Model:
-                    <input type="text" value={model} onChange={(e) => setter(e, "Model")} />
+                    <input type="text" value={model} onChange={(e) => setter(e, "Model")} required/>
                   </label>
                   <label className={styles.filter_label}>
                     Year:
@@ -135,9 +132,11 @@ export default function Home() {
                 </form>
               )}
             </div>
-            <div className={styles.filter_section}>
-              <h2 className={styles.filter_title} onClick={()=>toggleSection("range")}>Range Filters{isRangeVisible ? " ▲" : " ▼"}</h2>
-              {isRangeVisible&&(
+          </div>
+          <div className={styles.filter_section}>
+            <h2 className={styles.filter_title} onClick={() => toggleSection("range")}>Range Filters{isRangeVisible ? " ▲" : " ▼"}</h2>
+            <div className = {styles.filter_dropdown}>
+              {isRangeVisible && (
                 <>
                   <label className={styles.filter_label}>
                     City Miles Per Gallon:
@@ -153,11 +152,11 @@ export default function Home() {
                         type="number"
                         value={CMPG[1]}
                         onChange={(e) => setCMPG([CMPG[0] || 24, Number(e.target.value)])}
-                        placeholder= "Max"
+                        placeholder="Max"
                       />
                     </div>
-                </label>
-                <label className={styles.filter_label}>
+                  </label>
+                  <label className={styles.filter_label}>
                     Highway Miles Per Gallon:
                     <div className={styles.range_input}>
                       <input
@@ -171,11 +170,11 @@ export default function Home() {
                         type="number"
                         value={HMPG[1]}
                         onChange={(e) => setHMPG([HMPG[0] || 24, Number(e.target.value)])}
-                        placeholder= "Max"
+                        placeholder="Max"
                       />
                     </div>
-                </label>
-                <label className={styles.filter_label}>
+                  </label>
+                  <label className={styles.filter_label}>
                     Market Value:
                     <div className={styles.range_input}>
                       <input
@@ -189,50 +188,53 @@ export default function Home() {
                         type="number"
                         value={marketValue[1]}
                         onChange={(e) => setMarketValue([marketValue[0] || 24, Number(e.target.value)])}
-                        placeholder= "Max"
+                        placeholder="Max"
                       />
                     </div>
-                </label>
+                  </label>
                 </>
               )}
             </div>
-            <div className={styles.filter_section}>
-              <h2 className={styles.filter_title} onClick={()=>toggleSection("selection")}>Selection Filters{isSelectionVisible ? " ▲" : " ▼"}</h2>
-              {isSelectionVisible &&(
-              <>
-                {Object.keys(selection_filters).map((filterKey) => (
-                  <div key={filterKey}>
-                    <h3 className={styles.filter_sub_title}>{filterKey}</h3>
-                    {selection_filters[filterKey].map((option) => (
-                      <label key={option} className={styles.filter_label}>
-                        <input
-                          type="radio"
-                          name={filterKey}
-                          value={option}
-                          checked={filterState[filterKey] === option}
-                          onChange={(e) => setter(e, filterKey)}
-                        />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
-                ))}
+          </div>
+          <div className={styles.filter_section}>
+            <h2 className={styles.filter_title} onClick={() => toggleSection("selection")}>Selection Filters{isSelectionVisible ? " ▲" : " ▼"}</h2>
+            <div className = {styles.filter_dropdown}>
+              {isSelectionVisible && (
+                <>
+                  {Object.keys(selection_filters).map((filterKey) => (
+                    <div key={filterKey}>
+                      <h3 className={styles.filter_sub_title}>{filterKey}</h3>
+                      {selection_filters[filterKey].map((option) => (
+                        <label key={option} className={styles.filter_label}>
+                          <input
+                            type="radio"
+                            name={filterKey}
+                            value={option}
+                            checked={filterState[filterKey] === option}
+                            onChange={(e) => setter(e, filterKey)}
+                          />
+                          {option}
+                        </label>
+                      ))}
+                    </div>
+                  ))}
 
                 </>
               )}
-                  <div className={styles.filter_search}>
-                    <button className={styles.filter_search_button} onClick={store_filters}>
-                      VROOM VROOM
-                    </button>
-                </div>
             </div>
-          </aside>
-        </div>
-        <section>
-          <div>
-            {/* <FetchCars /> */}
+            <div className={styles.filter_search}>
+              <button className={styles.filter_search_button} onClick={store_filters}>
+                VROOM VROOM
+              </button>
+            </div>
           </div>
-        </section>
-      </main>
+        </aside>
+      </div>
+      <section className = {styles.filter_data_section}>
+        <div className = {styles.filter_data_item}>
+          <FetchCars filter={data}/>
+        </div>
+      </section>
+    </main>
   );
 }

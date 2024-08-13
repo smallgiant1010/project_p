@@ -17,11 +17,12 @@ load_dotenv()
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins, you can specify domains like ["http://localhost:3000"]
+    allow_origins=["*"], 
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods (GET, POST, PUT, DELETE, etc.)
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
+
 cluster = MongoClient(os.getenv("MONGO_CONNECT_STRING"))
 profileMethods = pM(cluster=cluster)
 carData = CD()
@@ -65,18 +66,18 @@ def delete_profile(profile_id: int) -> bool:
 # Car Requests
 @app.get("/car/stats")
 def getCarData(
-    make: str = Query("Toyota", description="Car make"),
+    make:str = None,
+    year: int = None,
+    fuel_type: str = None,
+    drive: str = None,
+    cylinders: int = None,
+    transmission: str = None,
+    min_city_mpg: int = None,
+    max_city_mpg: int = None,
+    min_hwy_mpg: int = None,
+    max_hwy_mpg: int = None,
     model: str = Query("Camry", description="Car model"),
-    year: int = Query(2020, description="Car year"),
-    fuel_type: str = Query(None, description="Fuel Type"),
-    drive: str = Query(None, description="Drive Type"),
-    cylinders: int = Query(None, description="Cylinder Count"),
-    transmission: str = Query(None, description="Transmission Type"),
-    min_city_mpg: int = Query(None, description="MINCMPG"),
-    max_city_mpg: int = Query(None, description="MAXCMPG"),
-    min_hwy_mpg: int = Query(None, description="MINHMPG"),
-    max_hwy_mpg: int = Query(None, description="MAXHMPG"),
-):
+): 
     filters = {
         'make': make,
         'model': model,
@@ -89,9 +90,9 @@ def getCarData(
         'max_city_mpg': max_city_mpg,
         'min_hwy_mpg': min_hwy_mpg,
         'max_hwy_mpg': max_hwy_mpg,
-        'limit': 50
+        'limit': 5
     } 
-    filters = {k: v for k, v in filters.items() if v is not None}
+    filters = {k: v for i, (k, v) in enumerate(filters.items()) if v is not None}
     return carData.getCarStats(filters=filters)
  
 @app.get("/cars/marketvalue")
