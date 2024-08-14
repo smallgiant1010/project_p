@@ -47,7 +47,7 @@ export default function Navbar() {
         <nav className={styles.nav}>
             <div className={styles.home_redirect}>
                 <button className={styles.home_button}>
-                    <Link href="/home" className={styles.website_name}>
+                    <Link href="/" className={styles.website_name}>
                         <Image
                             src={Logo}
                             alt={"MXZ Logo"}

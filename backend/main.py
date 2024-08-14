@@ -92,8 +92,10 @@ def getCarData(
         'max_hwy_mpg': max_hwy_mpg,
         'limit': 5
     } 
-    filters = {k: v for i, (k, v) in enumerate(filters.items()) if v is not None}
-    return carData.getCarStats(filters=filters)
+    print(filters)
+    data = {k: v for i, (k, v) in enumerate(filters.items()) if v is not None}
+    print(data)
+    return carData.getCarStats(filters=data)
  
 @app.get("/cars/marketvalue")
 def getMarketValue(year: int=2020, make: str="toyota", model:str="camry"):

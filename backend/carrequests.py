@@ -28,7 +28,7 @@ class CarData:
         response = requests.get(self.ninja, params=filters, headers={'X-Api-Key': api_key})
             
         # Debugging information
-        # print(f"Request URL: {response.url}")
+        print(f"Request URL: {response.url}")
         # print(f"Status Code: {response.status_code}")
         # print(f"Response Text: {response.text}")
 

@@ -1,0 +1,160 @@
+@import "./components/variables.module";
+
+
+.main {
+  display: flex;
+  height: 100%;
+
+  .sidebarWrapper {
+    top:0px;
+    display: flex;
+    position:relative;
+    flex-direction: column;
+    height: 100%;
+
+    .sidebar {
+      display: flex;
+      position:fixed;
+      flex-direction: column;
+      height: 100%;
+      width: 250px;
+      padding: 1rem;
+      background-color: map-get($map: $colors, $key: primary);
+      overflow-y:auto;
+
+
+      .filters_header {
+        color: white;
+        font-size: 1.5rem;
+      }
+      .filter_section {
+        margin-bottom: 5rem;
+
+      }
+
+      .filter_search {
+        display: flex;
+        justify-content: center;
+        margin-top:350px;
+
+        .filter_search_button {
+          padding:.5rem;
+          font-size: 1.5rem;
+          margin-bottom: 3rem;
+          background-color: map-get($map: $colors, $key: button);
+          color: map-get($map: $colors, $key: secondary);
+          border-radius: 0.5rem;
+          border-color: map-get($map: $colors, $key: secondary);
+  
+          &:hover {
+            cursor: pointer;
+            color: map-get($map: $colors, $key: text);
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          }
+        }
+      }
+
+      .filter_title {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        border-bottom: 2px solid #000;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+
+        &:hover {
+          color: black;
+          background-color: white;
+          cursor: pointer;
+        }
+      }
+
+      .filter_sub_title {
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .filter_label {
+        color: white;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+
+      .range_input {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        /* Adjust gap between inputs and "to" text */
+      }
+
+      .range_input input {
+        width: 80px;
+        /* Set a fixed width for the input boxes */
+        padding: 5px;
+        font-size: 14px;
+      }
+
+      .range_separator {
+        margin: 0 5px;
+      }
+
+
+
+      // @media (max-height: 720px){
+      //   height: 120vh;
+      //   width: 250px;
+      // }
+
+      // @media (min-height: 721px){
+      //   height: 120vh;
+      //   width: 250px;
+      // }
+
+    }
+  }
+
+  .filter_data_section{
+    margin-top: 1rem;
+    display: block;
+    // align-items: center;
+    box-sizing: border-box;
+    // justify-content: flex-start;
+    // flex-direction: row;
+    transform: translateX(285px);
+    width: calc(100% - 285px);
+
+    .filter_data_item{
+      display: grid;
+      grid-template-columns: repeat(1,1fr);
+      gap: 1rem;
+      // display: flex;
+      position: relative;
+      justify-content: space-evenly;
+      // .load_fail {
+      
+      // }
+      .data_item {
+        display: flex;
+        flex-wrap: wrap;
+        width:765px;
+        background:grey;
+        border: 1px solid black;
+        align-items: center;
+        justify-content: center;
+        h2 {
+          text-align: center; 
+        }
+      }
+    }
+  }
+
+  .filter_data_section > .filter_data_item:first-child {
+    margin-left: .8rem; /* Adjust as needed */
+  }
+
+  .filter_data_section > .filter_data_item:last-child {
+    margin-right: .8rem; /* Adjust as needed */
+  }
+}

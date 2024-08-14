@@ -42,7 +42,7 @@ export default function Login() {
                 //     if (loginInfo.ok) {
                         sessionStorage.setItem('u_id', data._id);
                         sessionStorage.setItem('username', data.username);
-                        window.location.href = '/home';
+                        window.location.href = '/';
                     // }
                 // }
             }
