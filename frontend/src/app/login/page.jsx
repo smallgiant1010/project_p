@@ -29,22 +29,9 @@ export default function Login() {
             }
 
             else {
-                // const write = await fetch('api/writeData', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify(data),
-                // });
-
-                // if (write.status === 200) {
-                //     const loginInfo = await fetch(`api/readData`, {
-                //         method: 'GET'
-                //     });
-                //     if (loginInfo.ok) {
-                        sessionStorage.setItem('u_id', data._id);
-                        sessionStorage.setItem('username', data.username);
-                        window.location.href = '/';
-                    // }
-                // }
+                sessionStorage.setItem('u_id', data._id);
+                sessionStorage.setItem('username', data.username);
+                window.location.href = '/';
             }
         } catch (error) {
             console.error(error);

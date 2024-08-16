@@ -67,8 +67,8 @@ export default function Navbar() {
                     </Link>
                 </button>
                 <button className={styles.content_pages_button}>
-                    <Link href="/history" className={styles.content_pages_name}>
-                        HISTORY
+                    <Link href="/wishlist" className={styles.content_pages_name}>
+                        WISHLIST
                     </Link>
                 </button>
                 <button className={styles.content_pages_button}>

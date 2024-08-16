@@ -92,7 +92,7 @@ class CarData:
         # Return Market Value
         return result
     
-    def getCarImage(self, year: int, make: str, model:str) -> dict[str, str] | list[dict[str, str | int]]:
+    def getCarImage(self, make: str, model:str) -> dict[str, str] | list[dict[str, str | int]]:
         # Error Message
         errorMessage = {
             "Message": "Could not retrieve a Image for this car"
@@ -106,7 +106,7 @@ class CarData:
 
         # Parameters
         params = {
-            'query': f"A {year} {make} {model} car",
+            'query': f"A {make} {model} car",
             'client_id': os.getenv("UNSPLASH_API_KEY"),
             'page': 1,
             'per_page': 1

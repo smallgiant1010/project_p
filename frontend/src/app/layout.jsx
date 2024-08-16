@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className} style={{margin: "0px"}}>
         <Navbar />
-        <hr style={{margin: "0px", border: "0px", background: "black", height : "5px", position: "sticky", top : "75px", "z-index": "2"}}></hr>
+        <hr style={{margin: "0px", border: "0px", background: "black", height : "5px", position: "sticky", top : "75px", zIndex: "2"}}></hr>
         {children}
       </body>
     </html>

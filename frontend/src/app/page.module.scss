@@ -4,6 +4,7 @@
 .main {
   display: flex;
   height: 100%;
+  background-color: map-get($map: $colors, $key: background);
 
   .sidebarWrapper {
     top:0px;
@@ -115,46 +116,165 @@
     }
   }
 
+
   .filter_data_section{
-    margin-top: 1rem;
+    margin-top: 1.75rem;
     display: block;
     // align-items: center;
     box-sizing: border-box;
     // justify-content: flex-start;
     // flex-direction: row;
-    transform: translateX(285px);
-    width: calc(100% - 285px);
+    transform: translateX(300px);
+    width: calc(100% - 300px);
 
     .filter_data_item{
-      display: grid;
-      grid-template-columns: repeat(1,1fr);
+      display: flex;
       gap: 1rem;
-      // display: flex;
       position: relative;
       justify-content: space-evenly;
+      flex-direction: row;
       // .load_fail {
       
+      .image_container{
+        display: flex;
+        flex-direction: column;
+        left:0;
+        img{
+          left:0;
+          width: 600px;
+          height:700px;
+        }
+      }
+
       // }
-      .data_item {
+      .unclicked_data_item {
+        margin-bottom: 30px;
+        cursor: pointer;
         display: flex;
         flex-wrap: wrap;
         width:765px;
-        background:grey;
-        border: 1px solid black;
+        background: rgb(169, 147, 182);
+        background: transparent;
+        border: 4px solid black;
+        box-shadow: 5px 5px 10px black;
         align-items: center;
         justify-content: center;
         h2 {
           text-align: center; 
         }
       }
+
+      .clicked_data_item{
+        margin-bottom: 30px;
+        cursor: pointer;
+        display:flex;
+        flex-wrap: wrap;
+        width: 765px;
+        border: 3px solid black;
+        box-shadow: 0px 0px 100px black;
+        background: transparent;
+        align-items: center;
+        h2{
+          width: 765px;
+          text-align: center;
+          backdrop-filter:blur(30px);
+
+          
+        }
+
+        h2::before {
+          content: '';              
+          position: absolute;        
+          left: 0;
+          bottom: -3px;                  
+          width: 0;                   
+          height: 3px;               
+          background-color: #000000; 
+          transition: width 0.5s ease; 
+        }
+
+        h2::after {
+          content: '';              
+          position: absolute;        
+          right: 0;
+          bottom: -18px;                  
+          width: 0;                   
+          height: 3px;               
+          background-color: #000000; 
+          transition: width 0.5s ease; 
+        }
+
+
+        
+        /* Trigger the animation on hover */
+        h2:hover::before {
+          width: 55%;                /* Expand the underline to full width */
+        }
+
+        h2:hover::after{
+          width:55%;
+        }
+        h3{
+          // opacity:0;
+          // animation: fadeIn 2s ease-in forwards;
+          text-align: left;
+          padding-left: 50px;
+
+        }
+
+        h3 strong{
+          opacity: 0;
+          animation: fadeIn 2s ease-in forwards;
+          text-align: left;
+
+        }
+
+        h3 span{
+          position:relative;
+          display: inline-block;
+          opacity:0;
+          animation: fadeIn 2s ease-in forwards;
+        }
+
+        h3 span::after {
+          content: '';              
+          position: absolute;        
+          left: 0;
+          bottom: -5px;                  
+          width: 0;                   
+          height: 3px;               
+          background-color: #000000; 
+          transition: width 0.5s ease; 
+          animation: underLineIn 2s ease-in forwards;
+        }
+      }
+
+      @keyframes fadeIn{
+        from{
+          opacity:0;
+        }
+        to{
+          opacity:1;
+        }
+      }
+
+      @keyframes underLineIn{
+        from{
+          width:0%;
+        }
+        to{
+          width: 100%;
+        }
+      }
     }
   }
 
-  .filter_data_section > .filter_data_item:first-child {
-    margin-left: .8rem; /* Adjust as needed */
-  }
 
-  .filter_data_section > .filter_data_item:last-child {
-    margin-right: .8rem; /* Adjust as needed */
-  }
+  // .filter_data_section > .filter_data_item:first-child {
+  //   margin-left: .8rem; /* Adjust as needed */
+  // }
+
+  // .filter_data_section > .filter_data_item:last-child {
+  //   margin-right: .8rem; /* Adjust as needed */
+  // }
 }

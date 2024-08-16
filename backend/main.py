@@ -67,7 +67,7 @@ def delete_profile(profile_id: int) -> bool:
 @app.get("/car/stats")
 def getCarData(
     make:str = None,
-    year: int = None,
+    year: int = Query(1993, description="Car Year Default"),
     fuel_type: str = None,
     drive: str = None,
     cylinders: int = None,
@@ -90,7 +90,7 @@ def getCarData(
         'max_city_mpg': max_city_mpg,
         'min_hwy_mpg': min_hwy_mpg,
         'max_hwy_mpg': max_hwy_mpg,
-        'limit': 5
+        'limit': 8
     } 
     print(filters)
     data = {k: v for i, (k, v) in enumerate(filters.items()) if v is not None}
@@ -102,8 +102,8 @@ def getMarketValue(year: int=2020, make: str="toyota", model:str="camry"):
     return carData.getMarketValueOfCar(year=year, make=make, model=model)
 
 @app.get("/cars/picture")
-def getCarPhoto(year: int=2020, make:str = "toyota", model:str="camry"):
-    return carData.getCarImage(year=year, make=make, model=model)
+def getCarPhoto(make:str = "toyota", model:str="camry"):
+    return carData.getCarImage(make=make, model=model)
 
  
 

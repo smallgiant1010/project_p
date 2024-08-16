@@ -8,16 +8,15 @@ import FetchCars from "./fetch";
 
 export default function Home() {
   const [data, setData] = useState({});
-  const [make, setMake] = useState("");
+  const [make, setMake] = useState("Toyota");
   const [model, setModel] = useState("Camry");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState(1993);
   const [CMPG, setCMPG] = useState([]);
   const [HMPG, setHMPG] = useState([]);
   const [cylinders, setCylinders] = useState("");
   const [fuel, setFuel] = useState("");
   const [drive, setDrive] = useState("");
   const [transmission, setTransmission] = useState("");
-  const [marketValue, setMarketValue] = useState([]);
   const [isKeywordVisible, setIsKeywordVisible] = useState("");
   const [isRangeVisible, setIsRangeVisible] = useState("");
   const [isSelectionVisible, setIsSelectionVisible] = useState("");
@@ -79,7 +78,6 @@ export default function Home() {
       case "Highway Miles Per Gallon": setHMPG(
         e.target.value
       ); break;
-      case "Market Value": setMarketValue(e.target.value); break;
       case "Cylinders": setCylinders(e.target.value); break;
       case "Fuel Type": setFuel(e.target.value); break;
       case "Drive": setDrive(e.target.value); break;
@@ -119,7 +117,7 @@ export default function Home() {
                   <>
                     <label className={styles.filter_label}>
                       Make:
-                      <input type="text" value={make} onChange={(e) => setter(e, "Make")} />
+                      <input type="text" value={make} onChange={(e) => setter(e, "Make")} required />
                     </label>
                     <label className={styles.filter_label}>
                       Model:
@@ -127,7 +125,7 @@ export default function Home() {
                     </label>
                     <label className={styles.filter_label}>
                       Year:
-                      <input type="number" value={year} onChange={(e) => setter(e, "Year")} />
+                      <input type="number" value={year} onChange={(e) => setter(e, "Year")} required/>
                     </label>
                   </>
                 )}
@@ -174,7 +172,7 @@ export default function Home() {
                         />
                       </div>
                     </label>
-                    <label className={styles.filter_label}>
+                    {/* <label className={styles.filter_label}>
                       Market Value:
                       <div className={styles.range_input}>
                         <input
@@ -191,7 +189,7 @@ export default function Home() {
                           placeholder="Max"
                         />
                       </div>
-                    </label>
+                    </label> */}
                   </>
                 )}
               </div>
