@@ -109,23 +109,24 @@ def getCarPhoto(make:str = "toyota", model:str="camry"):
 
 # Wish List Requests
 @app.get("/profile/wishlist")
-def getWishList(profile_id: dict[str, int]) -> dict[str, str]:
+def getWishList(profile_id: int) -> list[dict[str, str | int]]:
     wishlistData = wL(cluster=cluster, profile_id=profile_id)
     return wishlistData.retrieveWishList()
 
 @app.post("/profile/addCar")
-def addToWishlist(profile_id: dict[str, int], carData: dict[str, int | str]) -> dict[str, str]:
+def addToWishlist(profile_id: int, carData: dict[str, int | str]) -> dict[str, str]:
     wishlistData = wL(cluster=cluster, profile_id=profile_id)
     return wishlistData.addCar(carData=carData)
 
 @app.delete("/profile/removeCar")
-def removeFromWishList(profile_id: dict[str, int], carData: dict[str, int | str]) -> dict[str, str]:
+def removeFromWishList(profile_id: int, carData: dict[str, int | str]) -> dict[str, str]:
     wishlistData = wL(cluster=cluster, profile_id=profile_id)
     return wishlistData.removeCar(carData=carData)
-
-
-# http://127.0.0.1:8000
+ 
+ 
+# http://127.0.0.1:8082
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=8082, reload=True, timeout_keep_alive=5)
 
 
+ 

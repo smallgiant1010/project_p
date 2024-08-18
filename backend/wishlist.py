@@ -33,11 +33,7 @@ class Wishlist:
 
     
     # Retrieving WishList
-    def retrieveWishList(self) -> list[dict[str, str | int]] | dict[str, str]:
-        # Setting up Message
-        emptyMessage = {
-                "Message" : "Your WishList is empty"
-            }
+    def retrieveWishList(self) -> list[dict[str, str | int]]:
         
         # Resulting List of Cars
         result = []
@@ -50,11 +46,9 @@ class Wishlist:
             for car in specificWishList:
                 result.append(car)
 
-            result["count"] = self.collection.count_documents({"_id" : self.profile_id})
-        else:
-            return emptyMessage
-        
         return result
+        
+        
 
     # Add to WishList
     def addCar(self, carData: dict[str, str | int]) -> dict[str, str]:
@@ -63,16 +57,12 @@ class Wishlist:
             "Message": None
         }
 
-        # Adding ID to Car Data
-        addition = carData
-        addition["_id"] = self.profile_id
-
         # Car Validation
-        if self.collection.find_one(addition):
+        if self.collection.find_one(carData):
             statusMessage["Message"] = "This is already in your wishlist"
             return statusMessage
         else:
-            self.collection.insert_one(addition)
+            self.collection.insert_one(carData)
             statusMessage["Message"] = "Car successfully added to wishlist"
             return statusMessage
 

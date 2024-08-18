@@ -38,7 +38,7 @@ export default function Home() {
       "max_hwy_mpg": HMPG.length > 1 ? HMPG[1] : 60,
     };
     const clean = (obj) => {
-      return Object.keys(filters).reduce((acc, key) => {
+      return Object.keys(obj).reduce((acc, key) => {
       const value = obj[key];
       if (value != '') {
         acc[key] = value;
