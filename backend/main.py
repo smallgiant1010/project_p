@@ -104,23 +104,22 @@ def getMarketValue(year: int=2020, make: str="toyota", model:str="camry"):
 @app.get("/cars/picture")
 def getCarPhoto(make:str = "toyota", model:str="camry"):
     return carData.getCarImage(make=make, model=model)
-
- 
-
+  
+   
 # Wish List Requests
 @app.get("/profile/wishlist")
-def getWishList(profile_id: int) -> list[dict[str, str | int]]:
-    wishlistData = wL(cluster=cluster, profile_id=profile_id)
+def getWishList(input_username: str) -> list[dict[str, str | int]]:
+    wishlistData = wL(cluster=cluster, profile_username=input_username)
     return wishlistData.retrieveWishList()
 
 @app.post("/profile/addCar")
-def addToWishlist(profile_id: int, carData: dict[str, int | str]) -> dict[str, str]:
-    wishlistData = wL(cluster=cluster, profile_id=profile_id)
+def addToWishlist(input_username: str, carData: dict[str, int | str]) -> dict[str, str]:
+    wishlistData = wL(cluster=cluster, profile_username=input_username)
     return wishlistData.addCar(carData=carData)
 
 @app.delete("/profile/removeCar")
-def removeFromWishList(profile_id: int, carData: dict[str, int | str]) -> dict[str, str]:
-    wishlistData = wL(cluster=cluster, profile_id=profile_id)
+def removeFromWishList(input_username: str, carData: dict[str, int | str]) -> dict[str, str]:
+    wishlistData = wL(cluster=cluster, profile_username=input_username)
     return wishlistData.removeCar(carData=carData)
  
  

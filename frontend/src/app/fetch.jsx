@@ -55,7 +55,7 @@ async function postCarData(data) {
     if (typeof data.displacement === 'number') {
         data.displacement = data.displacement.toString();
     }
-    const url = `http://127.0.0.1:8082/profile/addCar?profile_id=${data._id}`;
+    const url = `http://127.0.0.1:8082/profile/addCar?input_username=${data.username}`;
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -72,25 +72,11 @@ async function postCarData(data) {
     }
 }
 
-// async function getWishListCarData(profile_id) {
-//     const url = `http://127.0.0.1:8082/profile/wishlist?${profile_id}`;
-//     try {
-//         const response = await fetch(url)
-//         console.log(response);
-//         if (!response.ok) {
-//             throw new Error(`status: ${response.status}`);
-//         }
-//         return await response.json();
-//     } catch (error) {
-//         console.error('Error posting data:', error);
-//     }
-// }
-
 async function removeCarData(data) {
     if (typeof data.displacement === 'number') {
         data.displacement = data.displacement.toString();
     }
-    const url = `http://127.0.0.1:8082/profile/removeCar?profile_id=${data._id}`;
+    const url = `http://127.0.0.1:8082/profile/removeCar?input_username=${data.username}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE',
@@ -134,13 +120,14 @@ export default function FetchCars({ filter }) {
                         break;
                 }
             });
-            const first_item = carData[0];
             const [carImg, carMV] = await Promise.all([
-                getCarPicture({ "make": first_item.make, "model": first_item.model }),
-                getCarMarketValue({ "year": first_item.year, "make": first_item.make, "model": first_item.model }),
+                getCarPicture({ "make": filter.make, "model": filter.model }),
+                getCarMarketValue({ "year": filter.year, "make": filter.make, "model": filter.model }),
             ])
             setCarPicture(carImg);
-            setCarMarketValue(carMV);
+            setCarMarketValue(!("Message" in carMV) ? carMV : {
+                "value" : "Could Not Retrieve Market Value for this Car"
+            });
             setCarStatistics(carData);
         };
         getCars();
@@ -151,20 +138,33 @@ export default function FetchCars({ filter }) {
 
 function render({ carStatistics }, { carPicture }, { carMarketValue }) {
     const [clickedCar, setClickedCar] = useState(null);
-    const [starState, setStarState] = useState(false);
-    const handleClick = async(e, carObject, stateOfStar) => {
+    const [starStates, setStarStates] = useState(() => new Array(carStatistics.length).fill(false));
+
+    
+    const updateElement = (index) => {
+        const copy = [...starStates];
+        copy[index] = !copy[index];
+        setStarStates(copy);
+    }
+
+    const handleClick = async(e, carObject, index) => {
+        e.stopPropagation();
         e.preventDefault();
-        const profile_id = sessionStorage.getItem("u_id");
-        if (profile_id !== null) {
+        console.log("button clicked");
+        const profile_username = sessionStorage.getItem("username");
+        if (profile_username !== null) {
             let saveCarData = { ...carObject };
             saveCarData.value = carMarketValue.value;
-            saveCarData._id = profile_id;
-            if (!stateOfStar) {
+            saveCarData.username = profile_username;
+            if (!starStates[index]) {
                 await postCarData(saveCarData);
             } else {
                 await removeCarData(saveCarData);
             }
-            setStarState(!stateOfStar);
+            console.log(starStates[index]);
+            updateElement(index);
+            console.log(starStates[index]);
+            console.log("change");
         } else {
             window.location.href = "/login";
         }
@@ -181,25 +181,46 @@ function render({ carStatistics }, { carPicture }, { carMarketValue }) {
     return (
         <>
             <div className={styles.image_container}>
-                <img src={carPicture.image_url} alt={"Car Image"} />
+                <div className = {styles.image_background}>
+                    <img src={carPicture.image_url} alt={carPicture.credit_string} className={styles.carImageItem} />
+                </div>  
                 <p>{carPicture.credit_string}</p>
-                <h1>Market Value: ${carMarketValue.value}</h1>
+                <div className = {styles.marketValueBlock}>
+                    <div className={styles.marketValueCollection}>
+                        Show Market Value
+                    </div>
+                    <h1 className={styles.marketValueItem}>Market Value: ${carMarketValue.value}</h1>
+                </div>
             </div>
+            {/* Separate Component */} 
             <div>
                 {carStatistics?.map((car, index) => (
                     <div className={clickedCar === index ? styles.clicked_data_item : styles.unclicked_data_item} key={index} onClick={() => setClickedCar(clickedCar === index ? null : index)} >
                         {clickedCar === index ? (
                             <div>
-                                {/* <a href="https://www.flaticon.com/free-icons/car" title="car icons" target="_blank" className={styles.carImage}>
-                                    <Image
-                                        src="/icons/sedan-car-front.png"
-                                        alt="Car icons created by Freepik - Flaticon"
-                                        width={50}
-                                        height={50}
-                                        quality={100}
-                                    />
-                                </a> */}
-                                <h2>{car.year} {car.make.toUpperCase()} {car.model.toUpperCase()}</h2>
+                                <div className={styles.clickedCarHead}> 
+                                    <a href="https://www.flaticon.com/free-icons/car" title="car icons" target="_blank" className={styles.carImage}>
+                                        <Image
+                                            src="/icons/sedan-car-front.png"
+                                            alt="Car icons created by Freepik - Flaticon"
+                                            width={50}
+                                            height={50}
+                                            quality={100}
+                                        />
+                                    </a>
+                                    <h2>{car.year} {car.make.toUpperCase()} {car.model.toUpperCase()}</h2>
+                                    <button className={styles.save_button} onClick={(e) => { handleClick(e, car, index) }}>
+                                        <a href="https://www.flaticon.com/free-icons/star" title="star icons" target="_blank">
+                                            <Image
+                                                src={starStates[index] ? "/icons/star.png" : "/icons/favorites.png"}
+                                                alt="Star icons created by Freepik - Flaticon"
+                                                width={50}
+                                                height={50}
+                                                quality={100}
+                                            />
+                                        </a>
+                                    </button>
+                                </div>
                                 <h3><span>Fuel Type:</span> <strong>{car.fuel_type}</strong></h3>
                                 <h3><span>Drive:</span> <strong>{car.drive}</strong></h3>
                                 <h3><span>Cylinders:</span> <strong>{car.cylinders}</strong></h3>
@@ -207,28 +228,6 @@ function render({ carStatistics }, { carPicture }, { carMarketValue }) {
                                 <h3><span>City Fuel Consumption In Miles Per Gallon:</span><strong>{car.city_mpg}</strong></h3>
                                 <h3><span>Highway Fuel Consumption In Miles Per Gallon:</span><strong>{car.highway_mpg}</strong></h3>
                                 <h3><span>Combined Fuel Consumption In Miles Per Gallon:</span><strong>{car.combination_mpg}</strong></h3>
-                                <button className={styles.save_button} onClick={(e) => { handleClick(e, car, starState) }}>
-                                    {!starState && <a href="https://www.flaticon.com/free-icons/star" title="star icons" target="_blank">
-                                        <Image
-                                            src="/icons/favorites.png"
-                                            alt="Star icons created by Freepik - Flaticon"
-                                            width={50}
-                                            height={50}
-                                            quality={100}
-                                        />
-                                    </a>
-                                    }
-                                    {starState && <a href="https://www.flaticon.com/free-icons/star" title="star icons" target="_blank">
-                                        <Image
-                                            src="/icons/star.png"
-                                            alt="Star icons created by Freepik - Flaticon"
-                                            width={50}
-                                            height={50}
-                                            quality={100}
-                                        />
-                                    </a>
-                                    }
-                                </button>
                             </div>
                         ) : (
                             <>
@@ -244,27 +243,16 @@ function render({ carStatistics }, { carPicture }, { carMarketValue }) {
                                 <h2>
                                     {car.year} {car.make.toUpperCase()} {car.model.toUpperCase()}
                                 </h2>
-                                <button className={styles.save_button} onClick={(e) => { handleClick(e, car, starState) }}>
-                                    {!starState && <a href="https://www.flaticon.com/free-icons/star" title="star icons" target="_blank">
+                                <button className={styles.save_button} onClick={(e) => { handleClick(e, car, index) }}>
+                                <a href="https://www.flaticon.com/free-icons/star" title="star icons" target="_blank">
                                         <Image
-                                            src="/icons/favorites.png"
+                                            src={starStates[index] ? "/icons/star.png" : "/icons/favorites.png"}
                                             alt="Star icons created by Freepik - Flaticon"
                                             width={50}
                                             height={50}
                                             quality={100}
                                         />
                                     </a>
-                                    }
-                                    {starState && <a href="https://www.flaticon.com/free-icons/star" title="star icons" target="_blank">
-                                        <Image
-                                            src="/icons/star.png"
-                                            alt="Star icons created by Freepik - Flaticon"
-                                            width={50}
-                                            height={50}
-                                            quality={100}
-                                        />
-                                    </a>
-                                    }
                                 </button>
                             </>
                         )}

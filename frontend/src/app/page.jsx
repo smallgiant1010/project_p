@@ -7,7 +7,11 @@ import FetchCars from "./fetch";
 
 
 export default function Home() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    "make": "Toyota",
+    "model": "Camry",
+    "year": 1993,
+  });
   const [make, setMake] = useState("Toyota");
   const [model, setModel] = useState("Camry");
   const [year, setYear] = useState(1993);

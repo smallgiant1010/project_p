@@ -1,0 +1,248 @@
+@import "../components/variables.module";
+
+
+
+.wishlist_section {
+    .wishlist_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // justify-content: center;
+        background-image: url("./carBackground.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        min-height: 100vh;
+        top: 0px;
+
+        .heading_block {
+            width: 100%;
+            position: sticky;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            backdrop-filter: blur(500px);
+            z-index: 4;
+            top: 75px;
+
+            .username_text {
+                font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                font-size: 65px;
+                font-weight: 700; 
+                color: lightblue;
+                text-align: center;
+                margin: 20px 0;
+                position: relative;
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: 50%;
+                    bottom: -10px; 
+                    transform: translateX(-50%); 
+                    width: 100%; 
+                    height: 4px; 
+                    background-color: lightblue;
+                    border-radius: 2px; 
+                  }
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 50%;
+                    bottom: -25px; 
+                    transform: translateX(-50%);
+                    width: 85%; 
+                    height: 4px; 
+                    background-color: black; 
+                    border-radius: 1px; 
+                  }
+            }
+        }
+
+        .unclicked_data_item {
+            margin-bottom: 30px;
+            cursor: pointer;
+            display: flex;
+            flex-wrap: wrap;
+            width: 765px;
+            background: lightblue;
+            border: 4px solid black;
+            box-shadow: 5px 5px 10px black;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1;
+
+            h2 {
+                text-align: center;
+            }
+
+            .carImage {
+                position: relative;
+                left: 20px;
+                z-index: 2;
+            }
+
+            .delete_button {
+                background: transparent;
+                background-image: url('./deleteCar.png');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                z-index: 3;
+                position: relative;
+                right: 10px;
+                width: 50px;
+                height: 50px;
+                border: none;
+
+                &:hover {
+                    cursor: pointer;
+                    background-image: url('./deletedCar.png');
+                }
+            }
+
+
+        }
+
+
+
+        .clicked_data_item {
+            margin-bottom: 30px;
+            cursor: pointer;
+            display: flex;
+            flex-wrap: wrap;
+            width: 765px;
+            border: 4px solid black;
+            box-shadow: 10px 10px 100px black;
+            background: lightblue;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1;
+
+            h2 {
+                text-align: center;
+                backdrop-filter: blur(30px);
+
+            }
+
+            .clickedCarHead {
+                width: 765px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                position: relative;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    bottom: 5px;
+                    width: 0;
+                    height: 3px;
+                    background-color: #000000;
+                    transition: width 0.5s ease;
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    right: 0;
+                    bottom: -10px;
+                    width: 0;
+                    height: 3px;
+                    background-color: #000000;
+                    transition: width 0.5s ease;
+                }
+
+                &:hover::before {
+                    width: 55%;
+                }
+
+                &:hover::after {
+                    width: 55%;
+                }
+
+            }
+
+            .carImage {
+                position: relative;
+                left: 20px;
+                z-index: 2;
+
+            }
+
+            .delete_button {
+                background: transparent;
+                background-image: url('./deleteCar.png');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                z-index: 3;
+                position: relative;
+                right: 10px;
+                width: 50px;
+                height: 50px;
+                border: none;
+
+                &:hover {
+                    cursor: pointer;
+                    background-image: url('./deletedCar.png');
+                }
+            }
+
+            h3 {
+                // opacity:0;
+                // animation: fadeIn 2s ease-in forwards;
+                text-align: left;
+                padding-left: 50px;
+
+                strong {
+                    opacity: 0;
+                    animation: fadeIn 2s ease-in forwards;
+                    text-align: left;
+                }
+
+                span {
+                    position: relative;
+                    display: inline-block;
+                    opacity: 0;
+                    animation: fadeIn 2s ease-in forwards;
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        bottom: -5px;
+                        width: 0;
+                        height: 3px;
+                        background-color: #000000;
+                        transition: width 0.5s ease;
+                        animation: underLineIn 2s ease-in forwards;
+                    }
+                }
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes underLineIn {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+    }
+
+}

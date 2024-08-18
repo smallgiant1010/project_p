@@ -24,12 +24,11 @@
 
 class Wishlist:
 
-    def __init__(self, cluster, profile_id: dict[str, int]) -> None:
+    def __init__(self, cluster, profile_username: str) -> None:
         self.cluster = cluster
-        self.id = profile_id
+        self.username = profile_username
         self.db = self.cluster["restaurant_data"]
         self.collection = self.db["wishlist"]
-        self.profile_id = profile_id
 
     
     # Retrieving WishList
@@ -39,7 +38,7 @@ class Wishlist:
         result = []
 
         # Getting all cars under this id
-        specificWishList = self.collection.find({"_id": self.profile_id})
+        specificWishList = self.collection.find({"username": self.username})
 
         # Car Validation
         if specificWishList:
@@ -57,14 +56,19 @@ class Wishlist:
             "Message": None
         }
 
+        carObject = carData;
+        latestCarAddition= self.collection.find_one(sort=[("_id", -1)])
+        carObject["_id"] = latestCarAddition["_id"] + 1 if latestCarAddition else 1
+
         # Car Validation
-        if self.collection.find_one(carData):
+        if self.collection.find_one(carObject):
             statusMessage["Message"] = "This is already in your wishlist"
             return statusMessage
         else:
-            self.collection.insert_one(carData)
+            self.collection.insert_one(carObject)
             statusMessage["Message"] = "Car successfully added to wishlist"
             return statusMessage
+
 
     # Remove from WishList
     def removeCar(self, carData: dict[str, str | int]) -> dict[str, str]:
@@ -74,9 +78,9 @@ class Wishlist:
         }
 
         search = self.collection.find_one(carData)
-
+        print(search)
         # Car Validation
-        if search["_id"] == self.profile_id:
+        if search and search["username"] == self.username:
             self.collection.delete_one(carData)
             statusMessage["Message"] = "This car has been removed from the wishlist"
             return statusMessage
