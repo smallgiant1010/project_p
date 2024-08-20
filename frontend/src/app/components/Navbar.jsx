@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import Logo from "./logo.png";
 import styles from "./main.module.scss";
 import Image from "next/image";
 import Profile from "./account.png"
@@ -49,7 +48,7 @@ export default function Navbar() {
                 <button className={styles.home_button}>
                     <Link href="/" className={styles.website_name}>
                         <Image
-                            src={Logo}
+                            src="/icons/logo.png"
                             alt={"MXZ Logo"}
                             width={50}
                             height={50}
