@@ -12,7 +12,7 @@ export default function Login() {
     const params = new URLSearchParams({
         inputPassword: password,
     }).toString()
-    const url = `http://127.0.0.1:8082/profiles/${username}?${params}`;
+    const url = `https://next-mobile-ventures-backend.onrender.com/profiles/${username}?${params}`;
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);

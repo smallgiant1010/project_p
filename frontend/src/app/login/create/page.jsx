@@ -8,7 +8,7 @@ export default function Create(){
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
-    const url = "http://127.0.0.1:8082/profiles/create";
+    const url = "https://next-mobile-ventures-backend.onrender.com/profiles/create";
     const handleSubmit = async(e) =>{
         e.preventDefault();
         setLoading(true)
@@ -49,7 +49,7 @@ export default function Create(){
                     <input type = "text" placeholder = "Username" onChange={(e) => setUsername(e.target.value)} required/>
                 </div>
                 <div className = {styles.signUpComp}>
-                    <input type = "password" placeholder = "Password" onChange={(e) => setPassword(e.target.value)} required/>
+                    <input type = "password" placeholder = "Password" minlength = "8"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" onChange={(e) => setPassword(e.target.value)} required/>
                 </div>
                 <Link href="/login" passHref >
                     <span className = {styles.loginRedirect}>Already have an account?</span>

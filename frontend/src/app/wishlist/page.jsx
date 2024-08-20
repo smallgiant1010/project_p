@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import styles from "./wishlist.module.scss";
 
 async function getWishListCarData(input_username) {
-    const url = `http://127.0.0.1:8082/profile/wishlist?input_username=${input_username}`;
+    const url = `https://next-mobile-ventures-backend.onrender.com/profile/wishlist?input_username=${input_username}`;
     try {
         const response = await fetch(url)
         console.log(response);
@@ -22,7 +22,7 @@ async function removeCarData(data) {
     if (typeof data.displacement === 'number') {
         data.displacement = data.displacement.toString();
     }
-    const url = `http://127.0.0.1:8082/profile/removeCar?input_username=${data.username}`;
+    const url = `https://next-mobile-ventures-backend.onrender.com/profile/removeCar?input_username=${data.username}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE',

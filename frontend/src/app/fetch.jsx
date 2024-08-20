@@ -6,7 +6,7 @@ import Image from "next/image";
 
 async function getCarStats(data) {
     const parameters = new URLSearchParams(data).toString();
-    const request = "http://127.0.0.1:8082/car/stats";
+    const request = "https://next-mobile-ventures-backend.onrender.com/car/stats";
     const url = `${request}?${parameters}`;
     try {
         const response = await fetch(url);
@@ -21,7 +21,7 @@ async function getCarStats(data) {
 
 async function getCarMarketValue(data) {
     const parameters = new URLSearchParams(data).toString();
-    const request = "http://127.0.0.1:8082/cars/marketvalue";
+    const request = "https://next-mobile-ventures-backend.onrender.com/cars/marketvalue";
     const url = `${request}?${parameters}`;
     try {
         const response = await fetch(url);
@@ -37,7 +37,7 @@ async function getCarMarketValue(data) {
 
 async function getCarPicture(data) {
     const parameters = new URLSearchParams(data).toString();
-    const request = "http://127.0.0.1:8082/cars/picture";
+    const request = "https://next-mobile-ventures-backend.onrender.com/cars/picture";
     const url = `${request}?${parameters}`;
     try {
         const response = await fetch(url);
@@ -55,7 +55,7 @@ async function postCarData(data) {
     if (typeof data.displacement === 'number') {
         data.displacement = data.displacement.toString();
     }
-    const url = `http://127.0.0.1:8082/profile/addCar?input_username=${data.username}`;
+    const url = `https://next-mobile-ventures-backend.onrender.com/profile/addCar?input_username=${data.username}`;
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -76,7 +76,7 @@ async function removeCarData(data) {
     if (typeof data.displacement === 'number') {
         data.displacement = data.displacement.toString();
     }
-    const url = `http://127.0.0.1:8082/profile/removeCar?input_username=${data.username}`;
+    const url = `https://next-mobile-ventures-backend.onrender.com/profile/removeCar?input_username=${data.username}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE',
